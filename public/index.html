@@ -1,83 +1,237 @@
 <!DOCTYPE html>
 <html>
-<head>
+  <head>
     <title>Look</title>
+    <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        body {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-        }
+      body {
+        padding-top: 60px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: calc(100vh - 60px);
+        margin: 0;
+        background-color: #f9fafb;
+      }
+
+      .shape {
+        width: 50px;
+        height: 50px;
+        background-color: #ccc;
+        margin: 5px;
+      }
+
+      #philosophy-text {
+        margin-top: 20px;
+        font-size: 20px;
+      }
     </style>
-    <script>
-        const shapeContainer = document.getElementById('shape-container');
-        const button = document.querySelector('#button');
-        const philosophyText = document.getElementById('philosophy-text');
+  </head>
+  <body>
+    <header class="fixed top-0 left-0 w-full bg-gray-100 flex justify-between items-center px-6 py-4">
+      <span class="text-xl font-bold">website</span>
+      <!--
+	  <img class="h-8 w-8" src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=500" alt="Your Company">
+	  -->
+      <input type="text" id="search-box" class="w-60 md:w-20 transition-width duration-100 focus:w-40" />
+      <button id="button" class="bg-white text-blue-500 font-semibold py-2 px-4 rounded-lg border border-blue-500 hover:bg-blue-500 hover:text-white transition-colors duration-300">Refresh</button>
+    </header>
 
-        // Create a random number of shapes
-        function createShapes(count) {
-            shapeContainer.innerHTML = '';
-            for (let i = 0; i < count; i++) {
-                const shape = document.createElement('div');
-                shape.classList.add('shape');
-                shapeContainer.appendChild(shape);
-            }
-        }
+    <!--
+    <div class="min-h-full">
+  <nav class="bg-gray-800">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div class="flex h-16 items-center justify-between">
+        <div class="flex items-center">
+          <div class="flex-shrink-0">
+          </div>
+          <div class="hidden md:block">
+            <div class="ml-10 flex items-baseline space-x-4">
 
-        // Generate random philosophy text
-        function generatePhilosophyText() {
-            const philosophers = ['Socrates', 'Plato', 'Aristotle', 'Descartes', 'Kant'];
-            const philosophies = [
-                'The unexamined life is not worth living.',
-                'Knowledge is the food of the soul.',
-                'The ultimate goal of human life is to attain happiness.',
-                'I think, therefore I am.',
-                'The moral law within us is the voice of God.'
-            ];
-            const randomPhilosopher = philosophers[Math.floor(Math.random() * philosophers.length)];
-            const randomPhilosophy = philosophies[Math.floor(Math.random() * philosophies.length)];
-            philosophyText.textContent = `${randomPhilosopher} once said, "${randomPhilosophy}"`;
-        }
+              <a href="#" class="bg-gray-900 text-white rounded-md px-3 py-2 text-sm font-medium" aria-current="page">Dashboard</a>
+              <a href="#" class="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium">Team</a>
+              <a href="#" class="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium">Projects</a>
+              <a href="#" class="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium">Calendar</a>
+              <a href="#" class="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium">Reports</a>
+            </div>
+          </div>
+        </div>
+        <div class="hidden md:block">
+          <div class="ml-4 flex items-center md:ml-6">
+            <button type="button" class="relative rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
+              <span class="absolute -inset-1.5"></span>
+              <span class="sr-only">View notifications</span>
+              <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M14.857 17.082a23.848 23.848 0 005.454-1.31A8.967 8.967 0 0118 9.75v-.7V9A6 6 0 006 9v.75a8.967 8.967 0 01-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 01-5.714 0m5.714 0a3 3 0 11-5.714 0" />
+              </svg>
+            </button>
 
-        // Change the number of shapes displayed
-        function changeShapeCount() {
-            const count = Math.floor(Math.random() * 10) + 5;
-            createShapes(count);
-            generatePhilosophyText();
-        }
+     
+            <div class="relative ml-3">
+              <div>
+                <button type="button" class="relative flex max-w-xs items-center rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800" id="user-menu-button" aria-expanded="false" aria-haspopup="true">
+                  <span class="absolute -inset-1.5"></span>
+                  <span class="sr-only">Open user menu</span>
+                  <img class="h-8 w-8 rounded-full" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="">
+                </button>
+              </div>
 
-        // Initialize the page with a random number of shapes
-        createShapes(Math.floor(Math.random() * 10) + 5);
-        generatePhilosophyText();
+              <div class="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="user-menu-button" tabindex="-1">
+           
+                <a href="#" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="user-menu-item-0">Your Profile</a>
+                <a href="#" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="user-menu-item-1">Settings</a>
+                <a href="#" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="user-menu-item-2">Sign out</a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="-mr-2 flex md:hidden">
 
-        // Attach event listener to the button
-        button.addEventListener('click', changeShapeCount);
-    </script>
-</head>
-<body>
-    <div id="shape-container"></div>
-    <button id="button">Click here</button>
-    <div id="philosophy-text"></div>
-</body>
-</html><!DOCTYPE html>
-<html>
-<head>
-    <title>Look</title>
-    <style>
-        body {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-        }
-    </style>
-</head>
-<body>
-    <div>
-        <a href="#">Click here</a>
+          <button type="button" class="relative inline-flex items-center justify-center rounded-md bg-gray-800 p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800" aria-controls="mobile-menu" aria-expanded="false">
+            <span class="absolute -inset-0.5"></span>
+            <span class="sr-only">Open main menu</span>
+
+            <svg class="block h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+            </svg>
+
+            <svg class="hidden h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+        </div>
+      </div>
     </div>
+
+    <div class="md:hidden" id="mobile-menu">
+      <div class="space-y-1 px-2 pb-3 pt-2 sm:px-3">
+
+        <a href="#" class="bg-gray-900 text-white block rounded-md px-3 py-2 text-base font-medium" aria-current="page">Dashboard</a>
+        <a href="#" class="text-gray-300 hover:bg-gray-700 hover:text-white block rounded-md px-3 py-2 text-base font-medium">Team</a>
+        <a href="#" class="text-gray-300 hover:bg-gray-700 hover:text-white block rounded-md px-3 py-2 text-base font-medium">Projects</a>
+        <a href="#" class="text-gray-300 hover:bg-gray-700 hover:text-white block rounded-md px-3 py-2 text-base font-medium">Calendar</a>
+        <a href="#" class="text-gray-300 hover:bg-gray-700 hover:text-white block rounded-md px-3 py-2 text-base font-medium">Reports</a>
+      </div>
+      <div class="border-t border-gray-700 pb-3 pt-4">
+        <div class="flex items-center px-5">
+          <div class="flex-shrink-0">
+            <img class="h-10 w-10 rounded-full" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="">
+          </div>
+          <div class="ml-3">
+            <div class="text-base font-medium leading-none text-white">Tom Cook</div>
+            <div class="text-sm font-medium leading-none text-gray-400">tom@example.com</div>
+          </div>
+          <button type="button" class="relative ml-auto flex-shrink-0 rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
+            <span class="absolute -inset-1.5"></span>
+            <span class="sr-only">View notifications</span>
+            <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M14.857 17.082a23.848 23.848 0 005.454-1.31A8.967 8.967 0 0118 9.75v-.7V9A6 6 0 006 9v.75a8.967 8.967 0 01-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 01-5.714 0m5.714 0a3 3 0 11-5.714 0" />
+            </svg>
+          </button>
+        </div>
+        <div class="mt-3 space-y-1 px-2">
+          <a href="#" class="block rounded-md px-3 py-2 text-base font-medium text-gray-400 hover:bg-gray-700 hover:text-white">Your Profile</a>
+          <a href="#" class="block rounded-md px-3 py-2 text-base font-medium text-gray-400 hover:bg-gray-700 hover:text-white">Settings</a>
+          <a href="#" class="block rounded-md px-3 py-2 text-base font-medium text-gray-400 hover:bg-gray-700 hover:text-white">Sign out</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <header class="bg-white shadow">
+    <div class="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
+      <h1 class="text-3xl font-bold tracking-tight text-gray-900">Dashboard</h1>
+    </div>
+  </header>
+  -->
+  <main>
+    <div class="mx-auto max-w-7xl py-6 sm:px-6 lg:px-8">
+    <div id="shape-container"></div>
+    <div id="philosophy-text">The whole life of a philosopher is nothing but a perpetual journey, a journey to the very essence of life, to the fundamental principles of the world, to the truth and the ultimate reality.</div>
+    <script>
+      const shapeContainer = document.getElementById('shape-container');
+      const button = document.querySelector('#button');
+      const philosophyText = document.getElementById('philosophy-text');
+
+      // Create a random number of shapes
+
+      function createShapes(count) {
+	  shapeContainer.innerHTML = '';
+	  for (let i = 0; i < count; i++) {
+	      const shape = document.createElement('div');
+	      shape.classList.add('shape');
+              shapeContainer.appendChild(shape);
+          }
+      }
+
+      // Generate random philosophy text
+      function generatePhilosophyText() {
+          const philosophers = ['Socrates'];
+          const philosophies = [
+	      'The unexamined life is not worth living.',
+	      'I know that I am intelligent because I know that I know nothing.',
+	      'By all means marry; if you get a good wife, you’ll become happy; if you get a bad one, you’ll become a philosopher.',
+	      'The only true wisdom is in knowing you know nothing.',
+	      'The secret of change is to focus all of your energy, not on fighting the old, but on building the new.',
+	      'There is only one good, knowledge, and one evil, ignorance.',
+	      'Be as you wish to seem.',
+	      'An education obtained with money is worse than no education at all.',
+	      'Wisdom begins in wonder.',
+	      'The greatest way to live with honor in this world is to be what we pretend to be.',
+	      'The children now love luxury; they have bad manners, contempt for authority; they show disrespect for elders and love chatter in place of exercise. Children are now tyrants, not the servants of their households. They no longer rise when elders enter the room. They contradict their parents, chatter before company, gobble up dainties at the table, cross their legs, and tyrannize their teachers.',
+	      'To find yourself, think for yourself.',
+	      'Prefer knowledge to wealth, for the one is transitory, the other perpetual.',
+	      'I cannot teach anybody anything. I can only make them think.',
+	      'The unexamined life is not worth living for a human being.',
+	      'The highest form of human excellence is to question oneself and others.',
+	      'He who is not contented with what he has, would not be contented with what he would like to have.',
+	      'The only true wisdom is in knowing you know nothing.',
+	      'We cannot live better than in seeking to become better.',
+	      'The greatest way to live with honor in this world is to be what we pretend to be.',
+	      'The ultimate goal of human life is to attain happiness.',
+	      'The beginning of wisdom is the definition of terms.',
+	      'The more I learn, the more I learn how little I know.',
+	      'The greatest obstacle to discovery is not ignorance – it is the illusion of knowledge.',
+	      'The mind is everything; what you think, you become.',
+	      'The only real wisdom is knowing how little we know about anything.',
+	      'The secret of happiness, you see, is not found in seeking more, but in developing the capacity to enjoy less.',
+	      'The early bird catches the worm.',
+	      'The end of life is to be like God, and the soul following God will be like Him.',
+	      'The greatest way to use time is to become a friend of the truth.',
+	      'The envious person grows lean with the fatness of their neighbor.',
+	      'The eyes are more exact witnesses than the ears.',
+	      'The hottest love has the coldest end.',
+	      'The greatest wealth is to live content with little.',
+	      'The most important thing in life is to learn how to give out love, and let it come in.',
+	      'The most difficult thing in life is to know yourself.',
+	      'The poets are only the interpreters of the gods.',
+	      'The whole life of a philosopher should be an anticipation of death.',
+	      'The way to gain a good reputation is to endeavor to be what you desire to appear.',
+	      'There is no possession more valuable than a good and loyal friend.'
+          ];
+          const randomPhilosopher = philosophers[0];
+	  const randomPhilosophy = philosophies[Math.floor(Math.random() * philosophies.length)];
+          philosophyText.textContent = `${randomPhilosopher} once said, "${randomPhilosophy}"`;
+      }
+
+      // Change the number of shapes displayed
+      function changeShapeCount() {
+          const count = Math.floor(Math.random() * 2) + 1;
+          createShapes(count);
+          generatePhilosophyText();
+      }
+      
+      // Initialize the page with a random number of shapes
+      generatePhilosophyText();
+      createShapes(Math.floor(Math.random() * 2) + 1);
+      
+      
+      // Attach event listener to the button
+      button.addEventListener('click', changeShapeCount);
+    </script>
+        </div>
+  </main>
+</div>
+    
 </body>
 </html>
