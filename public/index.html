@@ -1,237 +1,323 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>Look</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-      body {
-        padding-top: 60px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        height: calc(100vh - 60px);
-        margin: 0;
-        background-color: #f9fafb;
-      }
+<head>
+  <title>yo</title>
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.2/lib/anime.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  <link href="https://fonts.googleapis.com/css?family=Poppins:600" rel="stylesheet">
+</head>
 
-      .shape {
-        width: 50px;
-        height: 50px;
-        background-color: #ccc;
-        margin: 5px;
-      }
+<style>
+  body {
+    background: #1D1F20;
+    font-family: 'Courier New', sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
 
-      #philosophy-text {
-        margin-top: 20px;
-        font-size: 20px;
-      }
-    </style>
-  </head>
-  <body>
-    <header class="fixed top-0 left-0 w-full bg-gray-100 flex justify-between items-center px-6 py-4">
-      <span class="text-xl font-bold">website</span>
-      <!--
-	  <img class="h-8 w-8" src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=500" alt="Your Company">
-	  -->
-      <input type="text" id="search-box" class="w-60 md:w-20 transition-width duration-100 focus:w-40" />
-      <button id="button" class="bg-white text-blue-500 font-semibold py-2 px-4 rounded-lg border border-blue-500 hover:bg-blue-500 hover:text-white transition-colors duration-300">Refresh</button>
-    </header>
+  header {
+    background-color: #2B2D2F;
+    color: #fff;
+    padding: 2%;
+    text-align: center;
+    font-size: 1.25rem;
+    margin-bottom: 2%;
+  }
 
-    <!--
-    <div class="min-h-full">
-  <nav class="bg-gray-800">
-    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-      <div class="flex h-16 items-center justify-between">
-        <div class="flex items-center">
-          <div class="flex-shrink-0">
-          </div>
-          <div class="hidden md:block">
-            <div class="ml-10 flex items-baseline space-x-4">
+  main {
+    width: 100%;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 2%;
+  }
 
-              <a href="#" class="bg-gray-900 text-white rounded-md px-3 py-2 text-sm font-medium" aria-current="page">Dashboard</a>
-              <a href="#" class="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium">Team</a>
-              <a href="#" class="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium">Projects</a>
-              <a href="#" class="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium">Calendar</a>
-              <a href="#" class="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium">Reports</a>
-            </div>
-          </div>
-        </div>
-        <div class="hidden md:block">
-          <div class="ml-4 flex items-center md:ml-6">
-            <button type="button" class="relative rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
-              <span class="absolute -inset-1.5"></span>
-              <span class="sr-only">View notifications</span>
-              <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M14.857 17.082a23.848 23.848 0 005.454-1.31A8.967 8.967 0 0118 9.75v-.7V9A6 6 0 006 9v.75a8.967 8.967 0 01-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 01-5.714 0m5.714 0a3 3 0 11-5.714 0" />
-              </svg>
-            </button>
+  .object {
+    background-color: #2B2D2F;
+    color: #fff;
+    border-radius: 8px;
+    padding: 2%;
+    margin-bottom: 2%;
+    max-width: 80%;
+    margin: 0 auto;
+  }
 
-     
-            <div class="relative ml-3">
-              <div>
-                <button type="button" class="relative flex max-w-xs items-center rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800" id="user-menu-button" aria-expanded="false" aria-haspopup="true">
-                  <span class="absolute -inset-1.5"></span>
-                  <span class="sr-only">Open user menu</span>
-                  <img class="h-8 w-8 rounded-full" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="">
-                </button>
-              </div>
+  .object-header {
+    font-size: 1rem;
+    font-weight: bold;
+    margin-bottom: 3%;
+  }
 
-              <div class="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="user-menu-button" tabindex="-1">
-           
-                <a href="#" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="user-menu-item-0">Your Profile</a>
-                <a href="#" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="user-menu-item-1">Settings</a>
-                <a href="#" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="user-menu-item-2">Sign out</a>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="-mr-2 flex md:hidden">
+  .object-body {
+    font-size: 0.9rem;
+    font-weight: normal;
+    margin-bottom: 2%;
+  }
 
-          <button type="button" class="relative inline-flex items-center justify-center rounded-md bg-gray-800 p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800" aria-controls="mobile-menu" aria-expanded="false">
-            <span class="absolute -inset-0.5"></span>
-            <span class="sr-only">Open main menu</span>
+  .image-container {
+    margin-bottom: 2%;
+    text-align: center;
+  }
 
-            <svg class="block h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
-            </svg>
+  .image-container img {
+    max-width: 100%;
+    border-radius: 8px;
+  }
 
-            <svg class="hidden h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
-            </svg>
-          </button>
-        </div>
-      </div>
+  .video-container {
+    position: relative;
+    padding-bottom: 56.25%;
+    height: 0;
+    overflow: hidden;
+    margin-bottom: 2%;
+  }
+
+  .video-container iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  .textbox-container {
+    position: relative;
+    margin: 2% auto;
+    margin-bottom: 5%;
+    width: 65%;
+    text-align: center;
+  }
+
+  .textbox {
+    width: 100%;
+    padding: 2%;
+    box-sizing: border-box;
+    border: 2px solid hsl(56, 76%, 65%);
+    border-radius: 4px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.9rem;
+    color: #FFFFFF;
+    background-color: transparent;
+    text-align: center;
+    transition: border-color 0.3s ease;
+  }
+
+  .textbox:focus {
+    border-color: #71DFBE;
+    outline: none;
+  }
+
+  .button {
+    background: #2B2D2F;
+    height: 8vw;
+    width: 20vw;
+    text-align: center;
+    position: relative;
+    margin: 0 auto;
+    margin-bottom: 10%;
+    cursor: pointer;
+    border-radius: 30px;
+    overflow: hidden;
+  }
+
+  .button .text {
+    font: bold 1rem/1 poppins;
+    color: hsl(56, 76%, 65%);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    transition: transform 0.3s ease;
+  }
+
+  .button.invalid .text {
+    transform: translate(-50%, -50%) scale(0.8);
+  }
+
+  .progress-bar {
+    position: absolute;
+    height: 0.5vw;
+    width: 0;
+    bottom: 0;
+    left: 0;
+    border-radius: 200px;
+    background: lighten(#2B2D2F, 15%);
+  }
+
+  svg {
+    width: 2vw;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%) translateX(-50%);
+    left: 50%;
+    right: 0;
+  }
+
+  .check {
+    fill: none;
+    stroke: #FFFFFF;
+    stroke-width: 0.3vw;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  /* Adjusted styles for spacing */
+  .object + .object {
+    margin-top: 4%; /* Add margin to top of objects except the first one */
+  }
+
+  .object:last-child {
+    margin-bottom: 0; /* Remove margin from bottom of the last object */
+  }
+
+</style>
+
+<body>
+
+<header>
+  Yron's Website
+</header>
+
+<main>
+  <div class="object">
+    <div class="object-header">Something to remember:</div>
+    <div class="object-body" style="font-style:italic;">
+      “Kill your darlings, kill your darlings, even when it breaks your egocentric little scribbler’s heart, kill your darlings.”
     </div>
-
-    <div class="md:hidden" id="mobile-menu">
-      <div class="space-y-1 px-2 pb-3 pt-2 sm:px-3">
-
-        <a href="#" class="bg-gray-900 text-white block rounded-md px-3 py-2 text-base font-medium" aria-current="page">Dashboard</a>
-        <a href="#" class="text-gray-300 hover:bg-gray-700 hover:text-white block rounded-md px-3 py-2 text-base font-medium">Team</a>
-        <a href="#" class="text-gray-300 hover:bg-gray-700 hover:text-white block rounded-md px-3 py-2 text-base font-medium">Projects</a>
-        <a href="#" class="text-gray-300 hover:bg-gray-700 hover:text-white block rounded-md px-3 py-2 text-base font-medium">Calendar</a>
-        <a href="#" class="text-gray-300 hover:bg-gray-700 hover:text-white block rounded-md px-3 py-2 text-base font-medium">Reports</a>
-      </div>
-      <div class="border-t border-gray-700 pb-3 pt-4">
-        <div class="flex items-center px-5">
-          <div class="flex-shrink-0">
-            <img class="h-10 w-10 rounded-full" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="">
-          </div>
-          <div class="ml-3">
-            <div class="text-base font-medium leading-none text-white">Tom Cook</div>
-            <div class="text-sm font-medium leading-none text-gray-400">tom@example.com</div>
-          </div>
-          <button type="button" class="relative ml-auto flex-shrink-0 rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
-            <span class="absolute -inset-1.5"></span>
-            <span class="sr-only">View notifications</span>
-            <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M14.857 17.082a23.848 23.848 0 005.454-1.31A8.967 8.967 0 0118 9.75v-.7V9A6 6 0 006 9v.75a8.967 8.967 0 01-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 01-5.714 0m5.714 0a3 3 0 11-5.714 0" />
-            </svg>
-          </button>
-        </div>
-        <div class="mt-3 space-y-1 px-2">
-          <a href="#" class="block rounded-md px-3 py-2 text-base font-medium text-gray-400 hover:bg-gray-700 hover:text-white">Your Profile</a>
-          <a href="#" class="block rounded-md px-3 py-2 text-base font-medium text-gray-400 hover:bg-gray-700 hover:text-white">Settings</a>
-          <a href="#" class="block rounded-md px-3 py-2 text-base font-medium text-gray-400 hover:bg-gray-700 hover:text-white">Sign out</a>
-        </div>
-      </div>
+    <div class="object-body">
+      ― Stephen King, On Writing: A Memoir of the Craft
     </div>
-  </nav>
+  </div>
 
-  <header class="bg-white shadow">
-    <div class="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
-      <h1 class="text-3xl font-bold tracking-tight text-gray-900">Dashboard</h1>
+  <div class="object">
+    <div class="object-header">Somewhere to be:</div>
+    <div class="object-body image-container">
+      <img src="https://imgs.mongabay.com/wp-content/uploads/sites/20/2021/04/27102317/12-1.jpg" alt="Busa, PH">
     </div>
-  </header>
-  -->
-  <main>
-    <div class="mx-auto max-w-7xl py-6 sm:px-6 lg:px-8">
-    <div id="shape-container"></div>
-    <div id="philosophy-text">The whole life of a philosopher is nothing but a perpetual journey, a journey to the very essence of life, to the fundamental principles of the world, to the truth and the ultimate reality.</div>
-    <script>
-      const shapeContainer = document.getElementById('shape-container');
-      const button = document.querySelector('#button');
-      const philosophyText = document.getElementById('philosophy-text');
+  </div>
 
-      // Create a random number of shapes
+  <div class="object">
+    <div class="object-header">Something to listen to:</div>
+    <div class="object-body">
+      I usually listen to music while I get work done... and this is what I have been listening to lately.
+    </div>
+    <div class="object-body video-container">
+      <iframe width="80%" height="45vw" src="https://www.youtube.com/embed/_P2ilGmSXDk" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    </div>
+  </div>
 
-      function createShapes(count) {
-	  shapeContainer.innerHTML = '';
-	  for (let i = 0; i < count; i++) {
-	      const shape = document.createElement('div');
-	      shape.classList.add('shape');
-              shapeContainer.appendChild(shape);
-          }
+  <div class="object-body" style="text-align: center; font-size: 0.7rem; margin-top:10%; color:beige">
+    Type and submit your email address below</div>
+    <div class="object-body" style="text-align: center; font-size: 0.7rem; margin-top:2%; margin-bottom:10%; color:beige">
+    for a weekly letter to your email...</div>
+
+  <div class="textbox-container">
+    <input type="text" class="textbox" id="emailInput" placeholder="Your email address">
+  </div>
+
+  <div class="button">
+    <div class="text">Submit</div>
+    <div class="progress-bar"></div>
+    <svg x="0px" y="0px" viewBox="0 0 25 30" style="enable-background:new 0 0 25 30;">
+      <path class="check" class="st0" d="M2,19.2C5.9,23.6,9.4,28,9.4,28L23,2"/>
+    </svg>
+  </div>
+
+</main>
+
+<script>
+  var basicTimeline = anime.timeline({
+    autoplay: false
+  });
+
+  $(document).ready(function() {
+    var pathEls = $(".check");
+    for (var i = 0; i < pathEls.length; i++) {
+      var pathEl = pathEls[i];
+      var offset = anime.setDashoffset(pathEl);
+      pathEl.setAttribute("stroke-dashoffset", offset);
+    }
+
+    basicTimeline
+      .add({
+        targets: ".text",
+        duration: 1,
+        opacity: "0"
+      })
+      .add({
+        targets: ".button",
+        duration: 1300,
+        height: "2vw",
+        width: "20vw",
+        backgroundColor: "#2B2D2F",
+        border: "0",
+        borderRadius: "30px"
+      })
+      .add({
+        targets: ".progress-bar",
+        duration: 2000,
+        width: "20vw",
+        easing: "linear"
+      })
+      .add({
+        targets: ".button",
+        width: 0,
+        duration: 1
+      })
+      .add({
+        targets: ".progress-bar",
+        width: "6vw",
+        height: "6vw",
+        delay: 500,
+        duration: 750,
+        borderRadius: "6vw",
+        backgroundColor: "#71DFBE"
+      })
+      .add({
+        targets: pathEl,
+        strokeDashoffset: [offset, 0],
+        duration: 200,
+        easing: "easeInOutSine"
+      });
+
+    $(".button").click(function() {
+      // Get the entered email
+      var enteredEmail = $("#emailInput").val();
+      // Email validation regex
+      var emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      // Check if entered email is valid
+      if (!emailPattern.test(enteredEmail)) {
+        // If invalid, change button text and stop animation
+        $(".button").addClass("invalid");
+        $(".text").text("Invalid entry");
+        basicTimeline.pause();
+        return;
       }
 
-      // Generate random philosophy text
-      function generatePhilosophyText() {
-          const philosophers = ['Socrates'];
-          const philosophies = [
-	      'The unexamined life is not worth living.',
-	      'I know that I am intelligent because I know that I know nothing.',
-	      'By all means marry; if you get a good wife, you’ll become happy; if you get a bad one, you’ll become a philosopher.',
-	      'The only true wisdom is in knowing you know nothing.',
-	      'The secret of change is to focus all of your energy, not on fighting the old, but on building the new.',
-	      'There is only one good, knowledge, and one evil, ignorance.',
-	      'Be as you wish to seem.',
-	      'An education obtained with money is worse than no education at all.',
-	      'Wisdom begins in wonder.',
-	      'The greatest way to live with honor in this world is to be what we pretend to be.',
-	      'The children now love luxury; they have bad manners, contempt for authority; they show disrespect for elders and love chatter in place of exercise. Children are now tyrants, not the servants of their households. They no longer rise when elders enter the room. They contradict their parents, chatter before company, gobble up dainties at the table, cross their legs, and tyrannize their teachers.',
-	      'To find yourself, think for yourself.',
-	      'Prefer knowledge to wealth, for the one is transitory, the other perpetual.',
-	      'I cannot teach anybody anything. I can only make them think.',
-	      'The unexamined life is not worth living for a human being.',
-	      'The highest form of human excellence is to question oneself and others.',
-	      'He who is not contented with what he has, would not be contented with what he would like to have.',
-	      'The only true wisdom is in knowing you know nothing.',
-	      'We cannot live better than in seeking to become better.',
-	      'The greatest way to live with honor in this world is to be what we pretend to be.',
-	      'The ultimate goal of human life is to attain happiness.',
-	      'The beginning of wisdom is the definition of terms.',
-	      'The more I learn, the more I learn how little I know.',
-	      'The greatest obstacle to discovery is not ignorance – it is the illusion of knowledge.',
-	      'The mind is everything; what you think, you become.',
-	      'The only real wisdom is knowing how little we know about anything.',
-	      'The secret of happiness, you see, is not found in seeking more, but in developing the capacity to enjoy less.',
-	      'The early bird catches the worm.',
-	      'The end of life is to be like God, and the soul following God will be like Him.',
-	      'The greatest way to use time is to become a friend of the truth.',
-	      'The envious person grows lean with the fatness of their neighbor.',
-	      'The eyes are more exact witnesses than the ears.',
-	      'The hottest love has the coldest end.',
-	      'The greatest wealth is to live content with little.',
-	      'The most important thing in life is to learn how to give out love, and let it come in.',
-	      'The most difficult thing in life is to know yourself.',
-	      'The poets are only the interpreters of the gods.',
-	      'The whole life of a philosopher should be an anticipation of death.',
-	      'The way to gain a good reputation is to endeavor to be what you desire to appear.',
-	      'There is no possession more valuable than a good and loyal friend.'
-          ];
-          const randomPhilosopher = philosophers[0];
-	  const randomPhilosophy = philosophies[Math.floor(Math.random() * philosophies.length)];
-          philosophyText.textContent = `${randomPhilosopher} once said, "${randomPhilosophy}"`;
-      }
+      basicTimeline.play();
+      // Disable the input field after button click
+      $("#emailInput").prop("disabled", true);
+      $(".button").removeClass("invalid");
+    });
 
-      // Change the number of shapes displayed
-      function changeShapeCount() {
-          const count = Math.floor(Math.random() * 2) + 1;
-          createShapes(count);
-          generatePhilosophyText();
+    $(".text").click(function() {
+      if ($(".text").text() === "Invalid entry") {
+        $(".button").removeClass("invalid");
+        $(".text").text("Submit");
+        $("#emailInput").prop("disabled", false);
+        basicTimeline.seek(0); // Go back to the start of animation
       }
-      
-      // Initialize the page with a random number of shapes
-      generatePhilosophyText();
-      createShapes(Math.floor(Math.random() * 2) + 1);
-      
-      
-      // Attach event listener to the button
-      button.addEventListener('click', changeShapeCount);
-    </script>
-        </div>
-  </main>
-</div>
-    
+    });
+
+    $(".textbox").click(function() {
+      if ($(".text").text() === "Invalid entry") {
+        $(".button").removeClass("invalid");
+        $(".text").text("Submit");
+        basicTimeline.seek(0); // Go back to the start of animation
+      }
+    });
+  });
+</script>
+
 </body>
 </html>
