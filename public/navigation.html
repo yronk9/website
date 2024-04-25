@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>yo</title>
+  <title>navigation</title>
   <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.2/lib/anime.min.js"></script>
   <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
   <link href="https://fonts.googleapis.com/css?family=Poppins:600" rel="stylesheet">
@@ -37,7 +37,7 @@
     color: #fff;
     border-radius: 8px;
     padding: 2%;
-    margin-bottom: 2%;
+    margin-bottom: 25%;
     max-width: 80%;
     margin: 0 auto;
   }
@@ -118,6 +118,7 @@
     cursor: pointer;
     border-radius: 30px;
     overflow: hidden;
+    padding-bottom: 200%;
   }
 
   .button .text {
@@ -176,64 +177,21 @@
 <body>
 
 <header>
-  Yron's Website
+  Scroll down...
 </header>
 
 <main>
   <div class="object">
-    <div class="object-header" style="text-align: center;">
-      Haha you can't scroll down
-    </div>
-    <div class="object-body" style="text-align:center; font-style:italic;">
-      The rest of the website is under construction. Try again in the future.
-    </div>
-    <div class="object-body" style="text-align: center;">
-      – Yron
-    </div>
-  </div>
-
-  <div class="object">
-    <div class="object-header">Something to remember:</div>
-    <div class="object-body" style="font-style:italic;">
-      “Kill your darlings, kill your darlings, even when it breaks your egocentric little scribbler’s heart, kill your darlings.”
-    </div>
-    <div class="object-body">
-      ― Stephen King, On Writing: A Memoir of the Craft
-    </div>
-  </div>
-
-  <div class="object">
-    <div class="object-header">Somewhere to be:</div>
+    <div class="object-header"; style="text-align: center;">Click the image</div>
     <div class="object-body image-container">
       <img src="https://imgs.mongabay.com/wp-content/uploads/sites/20/2021/04/27102317/12-1.jpg" alt="Busa, PH">
     </div>
   </div>
-
   <div class="object">
-    <div class="object-header">Something to listen to:</div>
-    <div class="object-body">
-      I usually listen to music while I get work done... and this is what I have been listening to lately:
+    <div class="object-header">Click the image</div>
+    <div class="object-body image-container">
+      <img src="https://imgs.mongabay.com/wp-content/uploads/sites/20/2021/04/27102317/12-1.jpg" alt="Busa, PH">
     </div>
-    <div class="object-body video-container">
-      <iframe width="80%" height="45vw" src="https://www.youtube.com/embed/_P2ilGmSXDk" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-    </div>
-  </div>
-
-  <div class="object-body" style="text-align: center; font-size: 0.7rem; margin-top:10%; color:beige">
-    Type and submit your email address below</div>
-    <div class="object-body" style="text-align: center; font-size: 0.7rem; margin-top:2%; margin-bottom:10%; color:beige">
-    for a weekly letter to your email...</div>
-
-  <div class="textbox-container">
-    <input type="text" class="textbox" id="emailInput" placeholder="Your email address">
-  </div>
-
-  <div class="button">
-    <div class="text">Submit</div>
-    <div class="progress-bar"></div>
-    <svg x="0px" y="0px" viewBox="0 0 25 30" style="enable-background:new 0 0 25 30;">
-      <path class="check" class="st0" d="M2,19.2C5.9,23.6,9.4,28,9.4,28L23,2"/>
-    </svg>
   </div>
 
 </main>
@@ -282,11 +240,16 @@
   // Event listener for clicking on the object
   $(".object").click(function() {
     shakeObject($(this));
-    //window.location.href = 'navigation.html'; <-- YOU NEED THIS FOR NAVIGATION
   });
 
 
   $(document).ready(function() {
+
+    // Function to handle the click event on image containers
+    $(".image-container").click(function() {
+      // Redirect to index.html
+      window.location.href = "index.html";
+    });
 
     // Fade out header text when scrolling down
     $(window).scroll(function() {
@@ -300,91 +263,10 @@
         $("header").css("padding", padding);
         $("header").css("bottom-padding", padding);
 
-        if (scrollPosition > 15) {
-            // Limit scrolling to scroll position 15
-            $(window).scrollTop(17);
+        if (scrollPosition > 23) {
+            // Limit scrolling to scroll position 25
+            $(window).scrollTop(23);
         }
-    });
-
-    var pathEls = $(".check");
-    for (var i = 0; i < pathEls.length; i++) {
-      var pathEl = pathEls[i];
-      var offset = anime.setDashoffset(pathEl);
-      pathEl.setAttribute("stroke-dashoffset", offset);
-    }
-
-    basicTimeline
-    .add({
-      targets: ".text",
-      duration: 1,
-      opacity: "0"
-    })
-    .add({
-      targets: ".button",
-      duration: 1300,
-      height: "2vw",
-      width: "20vw",
-      backgroundColor: "#2B2D2F",
-      border: "0",
-      borderRadius: "30px"
-    })
-    .add({
-      targets: ".button",
-      width: 0,
-      duration: 1,
-      delay: 500
-    })
-    .add({
-      targets: ".progress-bar",
-      width: "6vw",
-      height: "6vw",
-      delay: 500,
-      duration: 750,
-      borderRadius: "6vw",
-      backgroundColor: "#71DFBE"
-    })
-    .add({
-      targets: pathEl,
-      strokeDashoffset: [offset, 0],
-      duration: 200,
-      easing: "easeInOutSine"
-    });
-
-    $(".button").click(function() {
-      // Get the entered email
-      var enteredEmail = $("#emailInput").val();
-      // Email validation regex
-      var emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-      // Check if entered email is valid
-      if (!emailPattern.test(enteredEmail)) {
-        // If invalid, change button text and stop animation
-        $(".button").addClass("invalid");
-        $(".text").text("Invalid entry");
-        basicTimeline.pause();
-        return;
-      }
-
-      basicTimeline.play();
-      // Disable the input field after button click
-      $("#emailInput").prop("disabled", true);
-      $(".button").removeClass("invalid");
-    });
-
-    $(".text").click(function() {
-      if ($(".text").text() === "Invalid entry") {
-        $(".button").removeClass("invalid");
-        $(".text").text("Submit");
-        $("#emailInput").prop("disabled", false);
-        basicTimeline.seek(0); // Go back to the start of animation
-      }
-    });
-
-    $(".textbox").click(function() {
-      if ($(".text").text() === "Invalid entry") {
-        $(".button").removeClass("invalid");
-        $(".text").text("Submit");
-        basicTimeline.seek(0); // Go back to the start of animation
-      }
     });
   });
 </script>
