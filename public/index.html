@@ -23,6 +23,7 @@
     text-align: center;
     font-size: 1.25rem;
     margin-bottom: 2%;
+    display: none;
   }
 
   main {
@@ -36,7 +37,17 @@
     background-color: #2B2D2F;
     color: #fff;
     border-radius: 8px;
-    padding: 2%;
+    padding: 4%;
+    margin-bottom: 2%;
+    max-width: 80%;
+    margin: 0 auto;
+  }
+
+  .object2 {
+    background-color: #1D1F20;
+    color: #fff;
+    border-radius: 8px;
+    padding: 20%;
     margin-bottom: 2%;
     max-width: 80%;
     margin: 0 auto;
@@ -164,7 +175,7 @@
   }
   /* Adjusted styles for spacing */
   .object + .object {
-    margin-top: 100%; /* Add margin to top of objects except the first one */
+    margin-top: 30%; /* Add margin to top of objects except the first one */
   }
 
   .object:last-child {
@@ -182,17 +193,26 @@
 <main>
   <div class="object">
     <div class="object-header" style="text-align: center;">
-      Haha you can't scroll down
+       
     </div>
-    <div class="object-body" style="text-align:center; font-style:italic;">
-      The rest of the website is under construction. Try again in the future.
+    <div class="object-body" style="text-align:center; font-style:bold;">
+      Click here to continue
     </div>
     <div class="object-body" style="text-align: center;">
-      – Yron
+       
     </div>
   </div>
 
-  <div class="object">
+  <div class="object2">
+    <div class="object-header" style="text-align: center;">
+    </div>
+    <div class="object-body" style="text-align:center; font-style:bold;">
+      The rest of the website is under construction...
+    </div>
+
+  </div>
+
+  <!-- <div class="object">
     <div class="object-header">Something to remember:</div>
     <div class="object-body" style="font-style:italic;">
       “Kill your darlings, kill your darlings, even when it breaks your egocentric little scribbler’s heart, kill your darlings.”
@@ -234,7 +254,7 @@
     <svg x="0px" y="0px" viewBox="0 0 25 30" style="enable-background:new 0 0 25 30;">
       <path class="check" class="st0" d="M2,19.2C5.9,23.6,9.4,28,9.4,28L23,2"/>
     </svg>
-  </div>
+  </div> -->
 
 </main>
 
@@ -268,11 +288,14 @@
       //   { value: 0, duration: 200, easing: 'easeInOutSine' }    // Shrink to nothing
       // ],
       translateX: [
-      { value: '-20px', duration: 100, easing: 'easeInOutSine' },
-      { value: '20px', duration: 100, easing: 'easeInOutSine' },
-      { value: '0px', duration: 100, easing: 'easeInOutSine' },
+      { value: '40px', duration: 250, easing: 'easeInOutSine' },
+      { value: '-40px', duration: 250, easing: 'easeInOutSine' },
+      { value: '0px', duration: 200, easing: 'easeInOutSine' },
       ],
-      duration: 970,
+      scale: [
+        { value: 1, duration: 500, easing: 'easeInOutSine' }, // Grow bigger
+        { value: 0, duration: 200, easing: 'easeInOutSine' }    // Shrink to nothing
+      ],
       complete: function(anim) {
         object.removeClass("shaking"); // Remove the shaking class after animation completes
       }
@@ -282,17 +305,30 @@
   // Event listener for clicking on the object
   $(".object").click(function() {
     shakeObject($(this));
-    //window.location.href = 'navigation.html'; <-- YOU NEED THIS FOR NAVIGATION
+    
+    // Delay the redirection by 1500 milliseconds (1.5 seconds)
+    setTimeout(function() {
+      window.location.href = 'navigation.html';  //<-- YOU NEED THIS FOR NAVIGATION
+    }, 2000);
   });
 
 
   $(document).ready(function() {
 
+    // Fade in header text when page opens
+    $("header").fadeIn(1000);
+
     // Fade out header text when scrolling down
     $(window).scroll(function() {
         var scrollPosition = $(this).scrollTop();
-        var opacity = 1 - (scrollPosition / 12);
+        var opacity = 1 - (scrollPosition / 14);
         $("header").css("opacity", opacity);
+
+        // Check if header is still animating
+        if (header.is(':animated')) {
+          // Stop the animation
+          header.stop();
+        }
 
         var paddingPercentage = 25 - (scrollPosition); // Change the division factor to adjust the speed of fading
         if (paddingPercentage < 2) paddingPercentage = 0.5; // Ensure padding doesn't go below 2%
@@ -300,10 +336,10 @@
         $("header").css("padding", padding);
         $("header").css("bottom-padding", padding);
 
-        if (scrollPosition > 15) {
-            // Limit scrolling to scroll position 15
-            $(window).scrollTop(17);
-        }
+        // if (scrollPosition > 17) {
+        //     // Limit scrolling to scroll position 17
+        //     $(window).scrollTop(17);
+        // }
     });
 
     var pathEls = $(".check");
