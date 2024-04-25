@@ -19,7 +19,7 @@
   header {
     background-color: #2B2D2F;
     color: #fff;
-    padding: 20%;
+    padding: 25%;
     text-align: center;
     font-size: 1.25rem;
     margin-bottom: 2%;
@@ -164,7 +164,7 @@
   }
   /* Adjusted styles for spacing */
   .object + .object {
-    margin-top: 4%; /* Add margin to top of objects except the first one */
+    margin-top: 100%; /* Add margin to top of objects except the first one */
   }
 
   .object:last-child {
@@ -180,6 +180,18 @@
 </header>
 
 <main>
+  <div class="object">
+    <div class="object-header" style="text-align: center;">
+      Haha you can't scroll down
+    </div>
+    <div class="object-body" style="text-align:center; font-style:italic;">
+      The rest of the website is under construction. Try again in the future.
+    </div>
+    <div class="object-body" style="text-align: center;">
+      – Yron
+    </div>
+  </div>
+
   <div class="object">
     <div class="object-header">Something to remember:</div>
     <div class="object-body" style="font-style:italic;">
@@ -236,25 +248,31 @@
     object.addClass("shaking"); // Add a class to the clicked object
     anime({
       targets: ".shaking", // Target elements with the shaking class
-      translateY: [
-        { value: '-20px', duration: 100, easing: 'easeInOutSine' }, // Translate up
-        { value: '20px', duration: 100, easing: 'easeInOutSine' },  // Translate down
-        { value: '0', duration: 100, easing: 'easeInOutSine' }     // Back to initial position
-      ],
+      // translateY: [
+      //   { value: '-20px', duration: 100, easing: 'easeInOutSine' }, // Translate up
+      //   { value: '20px', duration: 100, easing: 'easeInOutSine' },  // Translate down
+      //   { value: '0', duration: 100, easing: 'easeInOutSine' }     // Back to initial position
+      // ],
+      // translateX: [
+      //   { value: '-20px', duration: 100, easing: 'easeInOutSine' }, // Translate left
+      //   { value: '20px', duration: 100, easing: 'easeInOutSine' },  // Translate right
+      //   { value: '0', duration: 100, easing: 'easeInOutSine' }     // Back to initial position
+      // ],
+      // rotate: {
+      //   value: '360deg', // Spin around in a circle
+      //   duration: 500,
+      //   easing: 'easeInOutSine'
+      // },
+      // scale: [
+      //   { value: 2, duration: 200, easing: 'easeInOutSine' }, // Grow bigger
+      //   { value: 0, duration: 200, easing: 'easeInOutSine' }    // Shrink to nothing
+      // ],
       translateX: [
-        { value: '-20px', duration: 100, easing: 'easeInOutSine' }, // Translate left
-        { value: '20px', duration: 100, easing: 'easeInOutSine' },  // Translate right
-        { value: '0', duration: 100, easing: 'easeInOutSine' }     // Back to initial position
+      { value: '-20px', duration: 100, easing: 'easeInOutSine' },
+      { value: '20px', duration: 100, easing: 'easeInOutSine' },
+      { value: '0px', duration: 100, easing: 'easeInOutSine' },
       ],
-      rotate: {
-        value: '360deg', // Spin around in a circle
-        duration: 500,
-        easing: 'easeInOutSine'
-      },
-      scale: [
-        { value: 2, duration: 200, easing: 'easeInOutSine' }, // Grow bigger
-        { value: 0, duration: 200, easing: 'easeInOutSine' }    // Shrink to nothing
-      ],
+      duration: 970,
       complete: function(anim) {
         object.removeClass("shaking"); // Remove the shaking class after animation completes
       }
@@ -268,6 +286,25 @@
 
 
   $(document).ready(function() {
+
+    // Fade out header text when scrolling down
+    $(window).scroll(function() {
+        var scrollPosition = $(this).scrollTop();
+        var opacity = 1 - (scrollPosition / 12);
+        $("header").css("opacity", opacity);
+
+        var paddingPercentage = 25 - (scrollPosition); // Change the division factor to adjust the speed of fading
+        if (paddingPercentage < 2) paddingPercentage = 0.5; // Ensure padding doesn't go below 2%
+        var padding = paddingPercentage + "%";
+        $("header").css("padding", padding);
+        $("header").css("bottom-padding", padding);
+
+        if (scrollPosition > 15) {
+            // Limit scrolling to scroll position 15
+            $(window).scrollTop(17);
+        }
+    });
+
     var pathEls = $(".check");
     for (var i = 0; i < pathEls.length; i++) {
       var pathEl = pathEls[i];
