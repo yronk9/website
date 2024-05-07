@@ -161,39 +161,10 @@
   </main>
   
 
-    <!-- Additional scripts -->
-    <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.2/lib/anime.min.js"></script>
-    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-    <script>
-      // Function to fetch notes from GitHub repository
-      async function fetchNotesFromGitHub() {
-          try {
-              const response = await fetch('https://raw.githubusercontent.com/yronk9/website/main/saveFiles/notes.json');
-              const notes = await response.json();
-              return notes;
-          } catch (error) {
-              console.error('Error fetching notes:', error);
-              return [];
-          }
-      }
-
-      // Function to save note to GitHub repository
-      async function saveNoteToGitHub(note) {
-          try {
-              const notes = await fetchNotesFromGitHub();
-              notes.push(note);
-              await fetch('/saveFiles', {
-                  method: 'POST',
-                  headers: {
-                      'Content-Type': 'application/json'
-                  },
-                  body: JSON.stringify(notes)
-              });
-          } catch (error) {
-              console.error('Error saving note:', error);
-          }
-      }
-
+  <!-- Additional scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.2/lib/anime.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  <script>
       var basicTimeline = anime.timeline({
           autoplay: false
       });
@@ -218,7 +189,42 @@
                   validatePasskey();
               }
           });
+
+          // Fetch notes when the document is ready
+          fetchNotes();
       });
+
+      function fetchNotes() {
+          $.ajax({
+              url: "https://raw.githubusercontent.com/yronk9/website/main/saveFiles/notes.json",
+              type: "GET",
+              dataType: "json",
+              success: function(data) {
+                  displayNotes(data);
+              },
+              error: function(xhr, status, error) {
+                  console.error("Error fetching notes:", error);
+              }
+          });
+      }
+
+      function displayNotes(notes) {
+          var notesContainer = document.getElementById("notesContainer");
+          notesContainer.innerHTML = ""; // Clear previous notes
+          notes.forEach(function(note) {
+              var noteDiv = document.createElement("div");
+              noteDiv.classList.add("note");
+              var header = document.createElement("div");
+              header.classList.add("note-header");
+              header.textContent = note.timestamp;
+              var body = document.createElement("div");
+              body.classList.add("note-body");
+              body.textContent = note.content;
+              noteDiv.appendChild(header);
+              noteDiv.appendChild(body);
+              notesContainer.appendChild(noteDiv);
+          });
+      }
 
       function validatePasskey() {
           var passkey = document.getElementById("passkeyInput").value.trim();
@@ -230,32 +236,6 @@
               alert("Incorrect passkey. Please try again.");
           }
       }
-
-      // Updated saveNote function to save note to GitHub
-      function saveNote() {
-          var noteContent = document.getElementById("noteContent").value.trim();
-          if (noteContent !== "") {
-              var timestamp = new Date().toLocaleString();
-              var note = {
-                  timestamp: timestamp,
-                  content: noteContent
-              };
-              saveNoteToGitHub(note); // Save note to GitHub
-              displayNote(note);
-              document.getElementById("noteContent").value = "";
-          }
-      }
-
-      // Removed saveNoteToFile and displayNote functions related to local storage
-
-      // Load notes from GitHub on page load
-      window.onload = async function() {
-          var notes = await fetchNotesFromGitHub();
-          notes.forEach(function(note) {
-              displayNote(note);
-          });
-      };
-
   </script>
   </body>
 </html>
