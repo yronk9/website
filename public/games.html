@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>games</title>
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.2/lib/anime.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  <link href="https://fonts.googleapis.com/css?family=Poppins:600" rel="stylesheet">
+</head>
+
+<style>
+  body {
+    background: #1D1F20;
+    font-family: 'Courier New', sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  header {
+    background-color: #2B2D2F;
+    color: #fff;
+    padding: 25%;
+    text-align: center;
+    font-size: 1.25rem;
+    margin-bottom: 2%;
+    display: none;
+  }
+
+  main {
+    width: 100%;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0;
+  }
+
+  .fixed-object {
+    position: fixed;
+    top: 20px; /* Adjust top position as needed */
+    left: 20px; /* Adjust left position as needed */
+    padding: 10px; /* Add padding as needed */
+    width: calc(100vw / 8); /* Make the object 1/8 of the viewport width */
+    background-color: #2B2D2F;
+    color: #fff;
+    border-radius: 4px;
+    z-index: 1000; /* Ensure the object is above other content */
+    text-decoration: none;
+  }
+
+  .cursor-position {
+    position: fixed;
+    top: 80px;
+    right: 20px;
+    padding: 10px;
+    background-color: #2B2D2F;
+    color: #fff;
+    border-radius: 4px;
+    z-index: 1000;
+    text-decoration: none;
+  }
+
+  .live-scroll {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background-color: #2B2D2F;
+    color: #fff;
+    padding: 10px;
+    border-radius: 4px;
+    z-index: 1000;
+  }
+
+  .object {
+    background-color: #2B2D2F;
+    color: #fff;
+    border-radius: 4px;
+    padding: 3%;
+    margin-bottom: 25%;
+    max-width: 80%;
+    margin: 2% auto 0;
+  }
+
+  .object-header {
+    font-size: 1rem;
+    font-weight: bold;
+    margin-bottom: 3%;
+  }
+
+  .object-body {
+    font-size: 0.9rem;
+    font-weight: normal;
+    margin-bottom: 2%;
+  }
+
+  .image-container {
+    margin-bottom: 1%;
+    text-align: center;
+  }
+
+  .image-container img {
+    max-width: 100%;
+    border-radius: 8px;
+  }
+
+  .game-container {
+    margin-bottom: 1%;
+    text-align: center;
+  }
+
+  .game-container img {
+    max-width: 100%;
+    border-radius: 8px;
+  }
+
+  .wordle-game {
+    margin-bottom: 1%;
+    text-align: center;
+  }
+
+  .wordle-game img {
+    max-width: 100%;
+    border-radius: 8px;
+  }
+
+  .video-container {
+    position: relative;
+    padding-bottom: 56.25%;
+    height: 0;
+    overflow: hidden;
+    margin-bottom: 2%;
+  }
+
+  .video-container iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  .textbox-container {
+    position: relative;
+    margin: 2% auto;
+    margin-bottom: 5%;
+    width: 65%;
+    text-align: center;
+  }
+
+  .textbox {
+    width: 100%;
+    padding: 2%;
+    box-sizing: border-box;
+    border: 2px solid hsl(56, 76%, 65%);
+    border-radius: 4px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.9rem;
+    color: #FFFFFF;
+    background-color: transparent;
+    text-align: center;
+    transition: border-color 0.3s ease;
+  }
+
+  .textbox:focus {
+    border-color: #71DFBE;
+    outline: none;
+  }
+
+  .button {
+    background: #2B2D2F;
+    height: 8vw;
+    width: 20vw;
+    text-align: center;
+    position: relative;
+    margin: 0 auto;
+    margin-bottom: 10%;
+    cursor: pointer;
+    border-radius: 30px;
+    overflow: hidden;
+    padding-bottom: 200%;
+  }
+
+  .button .text {
+    font: bold 1rem/1 poppins;
+    color: hsl(56, 76%, 65%);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    transition: transform 0.3s ease;
+  }
+
+  .button.invalid .text {
+    transform: translate(-50%, -50%) scale(0.8);
+  }
+
+  .progress-bar {
+    position: absolute;
+    height: 10px;
+    width: 0;
+    right: 0;
+    top: 50%;
+    left: 50%;
+    border-radius: 200px;
+    transform: translateY(-50%) translateX(-50%);
+    background: lighten(#2B2D2F, 15%);
+  }
+
+  svg {
+    width: 30px;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%) translateX(-50%);
+    left: 50%;
+    right: 0;
+  }
+
+  .check {
+    fill: none;
+    stroke: #FFFFFF;
+    stroke-width: 3;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+  /* Adjusted styles for spacing */
+  .object + .object {
+    margin-top: 100%; /* Add margin to top of objects except the first one */
+  }
+
+  .object:last-child {
+    margin-bottom: 0; /* Remove margin from bottom of the last object */
+  }
+
+</style>
+
+<body>
+
+<!-- <header>
+  Scroll down...
+</header> 
+<a href="index.html" class="fixed-object" style="top: 20px;">Yron's Website</a> -->
+<div class="fixed-object" style="top: 20px; text-align: center; background-color: #1D1F20;">Yron's Website</div>
+<a href="index.html" class="fixed-object" style="top: 70px; text-align: center;">Home</a>
+<a href="navigation.html" class="fixed-object" style="top: 130px; text-align: center; background-color: #2b2d2f70;">Photos</a>
+<a href="update.html" class="fixed-object" style="top: 190px; text-align: center;">History</a>
+
+<main>
+  	<div class="object" id="90">
+    	<div class="object-header"; style="text-align: center;">4-letter wordle</div>
+    	<div class="object-body wordle-game" id="92">
+    		<img src="https://imgs.mongabay.com/wp-content/uploads/sites/20/2021/04/27102307/10-1-768x512.jpg" alt="Busa, PH">
+    		</div>
+  	</div>
+
+	<div class="object" id="91">
+		<div class="object-header"; style="text-align: center;">this is a game</div>
+    	<div class="object-body game-container">
+    		<img src="https://imgs.mongabay.com/wp-content/uploads/sites/20/2021/04/27113001/6-1.jpg" alt="Busa, PH">
+    	</div>
+    </div>
+</main>
+
+
+<div class="live-scroll">Scroll Position: 0px</div>
+<div class="cursor-position">Cursor Position: X=0, Y=0</div>
+
+
+<script>
+  var basicTimeline = anime.timeline({
+    autoplay: false
+  });
+
+  // Function to trigger the shaking animation
+  function shakeObject(object) {
+    object.addClass("shaking"); // Add a class to the clicked object
+    anime({
+      targets: ".shaking", // Target elements with the shaking class
+      translateX: [
+      { value: '40px', duration: 250, easing: 'easeInOutSine' },
+      { value: '-40px', duration: 250, easing: 'easeInOutSine' },
+      { value: '0px', duration: 200, easing: 'easeInOutSine' },
+      ],
+      scale: [
+        { value: 1, duration: 500, easing: 'easeInOutSine' }, // Grow bigger
+        { value: 0, duration: 200, easing: 'easeInOutSine' }    // Shrink to nothing
+      ],
+      complete: function(anim) {
+        object.removeClass("shaking"); // Remove the shaking class after animation completes
+      }
+    });
+  }
+
+
+  $(document).ready(function() {
+    // Fade in header text when page opens
+    $("header").fadeIn(1000);
+
+    // Function to handle the click event on image containers
+    $("#92").click(function() {
+      shakeObject($("#90"));
+      // Delay the redirection by 1500 milliseconds (1.5 seconds)
+      setTimeout(function() {
+        window.location.href = 'index.html';  //<-- YOU NEED THIS FOR NAVIGATION
+      }, 2000);
+    });
+
+    $(window).scroll(function() {
+      var scrollPosition = $(this).scrollTop();
+      $(".live-scroll").text("Scroll Position: " + scrollPosition);
+    });
+
+    // Function to update and display cursor's X and Y position
+    $(document).mousemove(function(event) {
+        var cursorX = event.pageX;
+        var cursorY = event.pageY;
+        $(".cursor-position").text("Cursor Position: X=" + cursorX + ", Y=" + cursorY);
+    });
+
+  //   // Fade out header text when scrolling down
+  //   $(window).scroll(function() {
+  //       var scrollPosition = $(this).scrollTop();
+  //       var opacity = 1 - (scrollPosition / 12);
+  //       $("header").css("opacity", opacity);
+
+  //       var paddingPercentage = 25 - (scrollPosition); // Change the division factor to adjust the speed of fading
+  //       if (paddingPercentage < 2) paddingPercentage = 0.5; // Ensure padding doesn't go below 2%
+  //       var padding = paddingPercentage + "%";
+  //       $("header").css("padding", padding);
+  //       $("header").css("bottom-padding", padding);
+
+  //       if (scrollPosition > 23) {
+  //           // Limit scrolling to scroll position 25
+  //           $(window).scrollTop(23);
+  //       }
+  //   });
+  });
+</script>
+
+</body>
+</html>
