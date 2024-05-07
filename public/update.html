@@ -148,7 +148,7 @@
       </div>
   
       <!-- Note-taking input section -->
-      <div id="noteInputSection" style="display: none;">
+      <div id="noteInputSection" style="display: none; margin-top: 5%;">
           <!--<div class="note-header">Take a Note</div>-->
           <textarea id="noteContent" placeholder="Write your note here..." style="width: 100%; height: 100px;"></textarea>
           <button onclick="saveNote()">Save Note</button>
@@ -165,77 +165,97 @@
     <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.2/lib/anime.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <script>
-        var basicTimeline = anime.timeline({
-            autoplay: false
-        });
+      // Function to fetch notes from GitHub repository
+      async function fetchNotesFromGitHub() {
+          try {
+              const response = await fetch('https://raw.githubusercontent.com/yronk9/website/main/saveFiles/notes.json');
+              const notes = await response.json();
+              return notes;
+          } catch (error) {
+              console.error('Error fetching notes:', error);
+              return [];
+          }
+      }
 
-        $(document).ready(function() {
-            $("header").fadeIn(1000);
+      // Function to save note to GitHub repository
+      async function saveNoteToGitHub(note) {
+          try {
+              const notes = await fetchNotesFromGitHub();
+              notes.push(note);
+              await fetch('/saveFiles', {
+                  method: 'POST',
+                  headers: {
+                      'Content-Type': 'application/json'
+                  },
+                  body: JSON.stringify(notes)
+              });
+          } catch (error) {
+              console.error('Error saving note:', error);
+          }
+      }
 
-            $(window).scroll(function() {
-                var scrollPosition = $(this).scrollTop();
-                $(".live-scroll").text("Scroll Position: " + scrollPosition);
-            });
+      var basicTimeline = anime.timeline({
+          autoplay: false
+      });
 
-            $(document).mousemove(function(event) {
-                var cursorX = event.pageX;
-                var cursorY = event.pageY;
-                $(".cursor-position").text("Cursor Position: X=" + cursorX + ", Y=" + cursorY);
-            });
+      $(document).ready(function() {
+          $("header").fadeIn(1000);
 
-            // Listen for Enter key press in passkey input field
-            $("#passkeyInput").keypress(function(event) {
-                if (event.which === 13) {
-                    validatePasskey();
-                }
-            });
-        });
+          $(window).scroll(function() {
+              var scrollPosition = $(this).scrollTop();
+              $(".live-scroll").text("Scroll Position: " + scrollPosition);
+          });
 
-        function validatePasskey() {
-            var passkey = document.getElementById("passkeyInput").value.trim();
-            if (passkey === "shorts") {
-                document.querySelector(".passkey-section").style.display = "none";
-                document.getElementById("noteInputSection").style.display = "block";
-                document.getElementById("noteDisplaySection").style.display = "block";
-            } else {
-                alert("Incorrect passkey. Please try again.");
-            }
-        }
+          $(document).mousemove(function(event) {
+              var cursorX = event.pageX;
+              var cursorY = event.pageY;
+              $(".cursor-position").text("Cursor Position: X=" + cursorX + ", Y=" + cursorY);
+          });
 
-        function saveNote() {
-            var noteContent = document.getElementById("noteContent").value.trim();
-            if (noteContent !== "") {
-                var timestamp = new Date().toLocaleString();
-                var note = {
-                    timestamp: timestamp,
-                    content: noteContent
-                };
-                saveNoteToFile(note);
-                displayNote(note);
-                document.getElementById("noteContent").value = "";
-            }
-        }
+          // Listen for Enter key press in passkey input field
+          $("#passkeyInput").keypress(function(event) {
+              if (event.which === 13) {
+                  validatePasskey();
+              }
+          });
+      });
 
-        function saveNoteToFile(note) {
-            var notes = JSON.parse(localStorage.getItem("notes")) || [];
-            notes.push(note);
-            localStorage.setItem("notes", JSON.stringify(notes));
-        }
+      function validatePasskey() {
+          var passkey = document.getElementById("passkeyInput").value.trim();
+          if (passkey === "shorts") {
+              document.querySelector(".passkey-section").style.display = "none";
+              document.getElementById("noteInputSection").style.display = "block";
+              document.getElementById("noteDisplaySection").style.display = "block";
+          } else {
+              alert("Incorrect passkey. Please try again.");
+          }
+      }
 
-        function displayNote(note) {
-            var noteElement = document.createElement("div");
-            noteElement.classList.add("note");
-            noteElement.innerHTML = "<div class='note-header'>" + note.timestamp + "</div><div class='note-body'>" + note.content + "</div>";
-            document.getElementById("notesContainer").prepend(noteElement);
-        }
+      // Updated saveNote function to save note to GitHub
+      function saveNote() {
+          var noteContent = document.getElementById("noteContent").value.trim();
+          if (noteContent !== "") {
+              var timestamp = new Date().toLocaleString();
+              var note = {
+                  timestamp: timestamp,
+                  content: noteContent
+              };
+              saveNoteToGitHub(note); // Save note to GitHub
+              displayNote(note);
+              document.getElementById("noteContent").value = "";
+          }
+      }
 
-        window.onload = function() {
-            var notes = JSON.parse(localStorage.getItem("notes")) || [];
-            notes.forEach(function(note) {
-                displayNote(note);
-            });
-        };
+      // Removed saveNoteToFile and displayNote functions related to local storage
 
-    </script>
-</body>
+      // Load notes from GitHub on page load
+      window.onload = async function() {
+          var notes = await fetchNotesFromGitHub();
+          notes.forEach(function(note) {
+              displayNote(note);
+          });
+      };
+
+  </script>
+  </body>
 </html>
