@@ -173,13 +173,13 @@
     stroke-linecap: round;
     stroke-linejoin: round;
   }
-  /* Adjusted styles for spacing */
+  /* spaces objects some distance apart */
   .object + .object {
-    margin-top: 30%; /* Add margin to top of objects except the first one */
+    margin-top: 30%; /* add margin to top of objects except the first one */
   }
 
   .object:last-child {
-    margin-bottom: 0; /* Remove margin from bottom of the last object */
+    margin-bottom: 0; /* remove margin from bottom of the last object */
   }
 
 </style>
@@ -263,20 +263,20 @@
     autoplay: false
   });
 
-  // Function to trigger the shaking animation
+  // trigger the shaking animation
   function shakeObject(object) {
-    object.addClass("shaking"); // Add a class to the clicked object
+    object.addClass("shaking"); // classifies to the clicked object as "shaking"
     anime({
-      targets: ".shaking", // Target elements with the shaking class
+      targets: ".shaking", // target elements with the shaking class
       // translateY: [
-      //   { value: '-20px', duration: 100, easing: 'easeInOutSine' }, // Translate up
-      //   { value: '20px', duration: 100, easing: 'easeInOutSine' },  // Translate down
-      //   { value: '0', duration: 100, easing: 'easeInOutSine' }     // Back to initial position
+      //   { value: '-20px', duration: 100, easing: 'easeInOutSine' }, // translate up
+      //   { value: '20px', duration: 100, easing: 'easeInOutSine' },  // translate down
+      //   { value: '0', duration: 100, easing: 'easeInOutSine' }     // back to initial position
       // ],
       // translateX: [
-      //   { value: '-20px', duration: 100, easing: 'easeInOutSine' }, // Translate left
-      //   { value: '20px', duration: 100, easing: 'easeInOutSine' },  // Translate right
-      //   { value: '0', duration: 100, easing: 'easeInOutSine' }     // Back to initial position
+      //   { value: '-20px', duration: 100, easing: 'easeInOutSine' }, // translate left
+      //   { value: '20px', duration: 100, easing: 'easeInOutSine' },  // translate right
+      //   { value: '0', duration: 100, easing: 'easeInOutSine' }     // back to initial position
       // ],
       // rotate: {
       //   value: '360deg', // Spin around in a circle
@@ -284,8 +284,8 @@
       //   easing: 'easeInOutSine'
       // },
       // scale: [
-      //   { value: 2, duration: 200, easing: 'easeInOutSine' }, // Grow bigger
-      //   { value: 0, duration: 200, easing: 'easeInOutSine' }    // Shrink to nothing
+      //   { value: 2, duration: 200, easing: 'easeInOutSine' }, // grow bigger
+      //   { value: 0, duration: 200, easing: 'easeInOutSine' }    // shrink to nothing
       // ],
       translateX: [
       { value: '40px', duration: 250, easing: 'easeInOutSine' },
@@ -293,20 +293,20 @@
       { value: '0px', duration: 200, easing: 'easeInOutSine' },
       ],
       scale: [
-        { value: 1, duration: 500, easing: 'easeInOutSine' }, // Grow bigger
-        { value: 0, duration: 200, easing: 'easeInOutSine' }    // Shrink to nothing
+        { value: 1, duration: 500, easing: 'easeInOutSine' }, // grow bigger
+        { value: 0, duration: 200, easing: 'easeInOutSine' }    // shrink to nothing
       ],
       complete: function(anim) {
-        object.removeClass("shaking"); // Remove the shaking class after animation completes
+        object.removeClass("shaking"); // remove the shaking class after animation completes
       }
     });
   }
 
-  // Event listener for clicking on the object
+  // listen for clicking on the object
   $(".object").click(function() {
     shakeObject($(this));
     
-    // Delay the redirection by 1500 milliseconds (1.5 seconds)
+    // delay the redirection by 1500 milliseconds (1.5 seconds)
     setTimeout(function() {
       window.location.href = 'navigation.html';  //<-- YOU NEED THIS FOR NAVIGATION
     }, 2000);
@@ -315,16 +315,16 @@
 
   $(document).ready(function() {
 
-    // Fade in header text when page opens
+    // fade in header text when page opens
     $("header").fadeIn(1000);
 
-    // Fade out header text when scrolling down
+    // fade out header text when scrolling down
     $(window).scroll(function() {
         var scrollPosition = $(this).scrollTop();
         var opacity = 1 - (scrollPosition / 14);
         $("header").css("opacity", opacity);
 
-        // Check if header is still animating
+        // check if header is still animating
         if (header.is(':animated')) {
           // Stop the animation
           header.stop();
@@ -387,13 +387,13 @@
     });
 
     $(".button").click(function() {
-      // Get the entered email
+      // get the entered email
       var enteredEmail = $("#emailInput").val();
-      // Email validation regex
+      // email validation regex
       var emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-      // Check if entered email is valid
+      // check if entered email is valid
       if (!emailPattern.test(enteredEmail)) {
-        // If invalid, change button text and stop animation
+        // if invalid, change button text and stop animation
         $(".button").addClass("invalid");
         $(".text").text("Invalid entry");
         basicTimeline.pause();
@@ -401,7 +401,7 @@
       }
 
       basicTimeline.play();
-      // Disable the input field after button click
+      // disable the input field after button click
       $("#emailInput").prop("disabled", true);
       $(".button").removeClass("invalid");
     });
@@ -411,7 +411,7 @@
         $(".button").removeClass("invalid");
         $(".text").text("Submit");
         $("#emailInput").prop("disabled", false);
-        basicTimeline.seek(0); // Go back to the start of animation
+        basicTimeline.seek(0); // go back to the start of animation
       }
     });
 
@@ -419,7 +419,7 @@
       if ($(".text").text() === "Invalid entry") {
         $(".button").removeClass("invalid");
         $(".text").text("Submit");
-        basicTimeline.seek(0); // Go back to the start of animation
+        basicTimeline.seek(0); // go back to the start of animation
       }
     });
   });
