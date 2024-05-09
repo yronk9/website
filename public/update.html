@@ -195,8 +195,9 @@
       });
 
       function fetchNotes() {
+          var randomQuery = Math.random(); // Generate a random number
           $.ajax({
-              url: "https://raw.githubusercontent.com/yronk9/website/main/saveFiles/notes.json",
+              url: "https://raw.githubusercontent.com/yronk9/website/main/saveFiles/notes.json?" + randomQuery,
               type: "GET",
               dataType: "json",
               success: function(data) {
@@ -208,6 +209,7 @@
               }
           });
       }
+
 
       function displayNotes(notes) {
           var notesContainer = document.getElementById("notesContainer");
