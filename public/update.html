@@ -214,6 +214,7 @@
       function displayNotes(notes) {
           var notesContainer = document.getElementById("notesContainer");
           notesContainer.innerHTML = ""; // Clear previous notes
+          notes.reverse(); // Reverse the order of notes
           notes.forEach(function(note) {
               var noteDiv = document.createElement("div");
               noteDiv.classList.add("note");
@@ -228,6 +229,7 @@
               notesContainer.appendChild(noteDiv);
           });
       }
+
 
       function saveNote() {
           var noteContent = document.getElementById("noteContent").value.trim();
