@@ -200,6 +200,7 @@
               type: "GET",
               dataType: "json",
               success: function(data) {
+                  console.log(data); // Log the data to check if it's fetched correctly
                   displayNotes(data);
               },
               error: function(xhr, status, error) {
@@ -226,6 +227,35 @@
           });
       }
 
+      function saveNote() {
+          var noteContent = document.getElementById("noteContent").value.trim();
+          if (noteContent === "") {
+              alert("Please enter a note.");
+              return;
+          }
+          var timestamp = new Date().toLocaleString();
+          var newNote = {
+              timestamp: timestamp,
+              content: noteContent
+          };
+          $.ajax({
+              url: "/saveFiles", // Change this to the endpoint provided by your server
+              type: "POST",
+              data: JSON.stringify([newNote]), // Sending an array with a single note
+              contentType: "application/json",
+              success: function(response) {
+                  alert(response); // Assuming the server sends back a message
+                  // Clear the note input field after saving
+                  document.getElementById("noteContent").value = "";
+                  // Refresh the page to display updated notes
+                  location.reload();
+              },
+              error: function(xhr, status, error) {
+                  console.error("Error saving note:", error);
+              }
+          });
+      }
+
       function validatePasskey() {
           var passkey = document.getElementById("passkeyInput").value.trim();
           if (passkey === "shorts") {
@@ -235,7 +265,8 @@
           } else {
               alert("Incorrect passkey. Please try again.");
           }
-      }
+        }
+    </script>
   </script>
   </body>
 </html>
