@@ -186,7 +186,7 @@
 
 <body>
 
-<header>
+<header id="header">
   Yron's Website
 </header>
 
@@ -312,7 +312,6 @@
     }, 2000);
   });
 
-
   $(document).ready(function() {
 
     // fade in header text when page opens
@@ -321,7 +320,7 @@
     // fade out header text when scrolling down
     $(window).scroll(function() {
         var scrollPosition = $(this).scrollTop();
-        var opacity = 1 - (scrollPosition / 14);
+        var opacity = 1 - (scrollPosition / 240);
         $("header").css("opacity", opacity);
 
         // check if header is still animating
@@ -423,6 +422,18 @@
       }
     });
   });
+
+  // Function to scroll to the bottom of the page
+  function scrollToBottom() {
+    window.scrollTo({
+      top: document.body.scrollHeight,
+      behavior: 'smooth'
+    });
+  }
+
+  // Add click event listener to the header to scroll to the bottom
+  document.getElementById('header').addEventListener('click', scrollToBottom);
+  
 </script>
 
 </body>
