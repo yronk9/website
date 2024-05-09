@@ -195,20 +195,31 @@
       });
 
       function fetchNotes() {
-          var randomQuery = Math.random(); // Generate a random number
-          $.ajax({
-              url: "https://raw.githubusercontent.com/yronk9/website/main/saveFiles/notes.json?" + randomQuery,
-              type: "GET",
-              dataType: "json",
-              success: function(data) {
-                  console.log(data); // Log the data to check if it's fetched correctly
-                  displayNotes(data);
-              },
-              error: function(xhr, status, error) {
-                  console.error("Error fetching notes:", error);
-              }
-          });
-      }
+        var randomQuery = Math.random(); // Generate a random number
+        
+        // Show loading indicator
+        $('#notesContainer').html('<div class="loading">Loading...</div>');
+        
+        $.ajax({
+            url: "https://raw.githubusercontent.com/yronk9/website/main/saveFiles/notes.json?" + randomQuery,
+            type: "GET",
+            dataType: "json",
+            success: function(data) {
+                console.log(data); // Log the data to check if it's fetched correctly
+                displayNotes(data);
+                
+                // Hide loading indicator once notes are displayed
+                $('.loading').remove();
+            },
+            error: function(xhr, status, error) {
+                console.error("Error fetching notes:", error);
+                
+                // Hide loading indicator if there's an error
+                $('.loading').remove();
+            }
+        });
+    }
+
 
 
       function displayNotes(notes) {
