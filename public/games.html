@@ -231,8 +231,6 @@
 
   .center-object {
     position: relative;
-    width: 300px; /* Adjust the size of the center object */
-    margin: 0 auto;
   }
 
   /*
@@ -287,7 +285,7 @@
 
   @media only screen and (max-width: 1000px) {
   .square {
-    width: 25px; /* Shrink the width by 50% */
+    width: 10%; /* Shrink the width by 50% */
     height: 25px; /* Shrink the height by 50% */
     font-size: 162.5%; /* Shrink the font size by 50% */
   }
@@ -319,7 +317,7 @@
 
 
 <main>
-  	<div class="object" id="90">
+  	<div class="object" id="90" style="justify-content: center; align-items: center;">
     	<div class="object-header"; style="text-align: center;">4-letter wordle</div>
     	<div class="object-body wordle-game" id="92">
         <div class="center-object">
@@ -383,6 +381,9 @@
             <div class="square">M</div>
           </div>
         </div>
+        <div class="square" style="background-color: #2B2D2F;"></div>
+        Coming soon...
+      </div>
         
         
         
@@ -391,12 +392,12 @@
     		</div>
   	</div>
 
-	<div class="object" id="91">
+	<!--<div class="object" id="91">
 		<div class="object-header"; style="text-align: center;">this is a game</div>
     	<div class="object-body game-container">
     		<img src="https://imgs.mongabay.com/wp-content/uploads/sites/20/2021/04/27113001/6-1.jpg" alt="Busa, PH">
     	</div>
-    </div>
+    </div>-->
 </main>
 
 
@@ -433,7 +434,7 @@
   function animateFixedObjectLeft() {
     anime({
       targets: '.fixed-object',
-      translateX: '-100%',
+      translateX: '-150%',
       easing: 'easeInOutQuad',
       duration: 500
     });
@@ -443,7 +444,7 @@
   function animateLiveScrollRight() {
     anime({
       targets: '.live-scroll, .cursor-position',
-      translateX: '100%',
+      translateX: '150%',
       easing: 'easeInOutQuad',
       duration: 500
     });
@@ -495,7 +496,7 @@
     });
 
     // Check window width on page load
-    if ($(window).width() < 1200) {
+    if ($(window).width() < 1000) {
       // Animate fixed object exiting to the left
       animateFixedObjectLeft();
       // Animate live scroll exiting to the right
@@ -504,9 +505,9 @@
       // Define the animation properties for square shrinking
       var shrinkAnimationProperties = {
         targets: ['.square', '.square2'],
-        width: '25px',
-        height: '25px',
-        fontSize: '162.5%', // 50% increase in font size
+        width: '35px',
+        height: '35px',
+        fontSize: '225%', // 50% increase in font size
         easing: 'easeInOutSine', // Use easing for smoother animation
         duration: 500 // Animation duration in milliseconds
       };
@@ -517,7 +518,7 @@
 
     // Check window width on window resize
     $(window).resize(function() {
-      if ($(window).width() < 1200) {
+      if ($(window).width() < 1000) {
         // Animate fixed object exiting to the left
         animateFixedObjectLeft();
         // Animate live scroll exiting to the right
