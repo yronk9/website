@@ -38,7 +38,7 @@
     top: 20px; /* Adjust top position as needed */
     left: 20px; /* Adjust left position as needed */
     padding: 10px; /* Add padding as needed */
-    width: calc(100vw / 8); /* Make the object 1/8 of the viewport width */
+    /*width: calc(100vw / 8); /* Make the object 1/8 of the viewport width */
     background-color: #2B2D2F;
     color: #fff;
     border-radius: 4px;
@@ -229,6 +229,80 @@
     margin-bottom: 0; /* Remove margin from bottom of the last object */
   }
 
+  .center-object {
+    position: relative;
+    width: 300px; /* Adjust the size of the center object */
+    margin: 0 auto;
+  }
+
+  /*
+  .row:nth-child(1) {
+    background-color: #FF6347; 
+  }
+
+  .row:nth-child(2) {
+    background-color: #66CDAA; 
+  }
+
+  .row:nth-child(3) {
+    background-color: #9370DB;
+  } */
+
+  .row {
+    display: flex;
+    justify-content: center;
+  }
+
+  .square {
+    flex-shrink: 0; /* prevent squares from stretching */
+    width: 50px; /* adjust the size of the squares */
+    height: 50px; /* adjust the size of the squares */
+    background-color: #0080ff; /* default color */
+    margin: 5px; /* adjust the spacing between squares */
+    font-size: 325%; /* adjust the font size of the character */
+    font-weight: bold;
+    border-radius: 7px;
+  }
+
+
+  .square2 {
+    flex-shrink: 0;
+    width: 50px; 
+    height: 50px; 
+    background-color: #00c750; /* win color */
+    margin: 5px; 
+    margin-top: 10%; /* adjust the spacing between squares */
+    font-size: 325%; /* adjust the font size of the character */
+    font-weight: bold;
+    border-radius: 7px;
+  }
+
+  .word {
+    background-color: #00c750;
+  }
+
+  .nope {
+    opacity: 0.5; /* Adjust the opacity value as needed */
+  }
+
+  @media only screen and (max-width: 1000px) {
+  .square {
+    width: 25px; /* Shrink the width by 50% */
+    height: 25px; /* Shrink the height by 50% */
+    font-size: 162.5%; /* Shrink the font size by 50% */
+  }
+
+  .square2 {
+    width: 25px; /* Shrink the width by 50% */
+    height: 25px; /* Shrink the height by 50% */
+    font-size: 162.5%; /* Shrink the font size by 50% */
+  }
+}
+
+
+
+
+
 </style>
 
 <body>
@@ -239,16 +313,81 @@
 <a href="index.html" class="fixed-object" style="top: 20px;">Yron's Website</a> -->
 <div class="fixed-object" style="top: 20px; text-align: center; background-color: #1D1F20;">Yron's Website</div>
 <a href="index.html" class="fixed-object" style="top: 70px; text-align: center;">Home</a>
-<a href="navigation.html" class="fixed-object" style="top: 130px; text-align: center; background-color: #2b2d2f70;">Photos</a>
+<a href="navigation.html" class="fixed-object" style="top: 130px; text-align: center;">Photos</a>
 <a href="update.html" class="fixed-object" style="top: 190px; text-align: center;">History</a>
-<a href="games.html" class="fixed-object" style="top: 250px; text-align: center;">Games</a>
+<a href="games.html" class="fixed-object" style="top: 250px; text-align: center; background-color: #2b2d2f70;">Games</a>
 
 
 <main>
   	<div class="object" id="90">
     	<div class="object-header"; style="text-align: center;">4-letter wordle</div>
     	<div class="object-body wordle-game" id="92">
-    		<img src="https://imgs.mongabay.com/wp-content/uploads/sites/20/2021/04/27102307/10-1-768x512.jpg" alt="Busa, PH">
+        <div class="center-object">
+          <div class="row">
+            <div class="square">N</div>
+            <div class="square">I</div>
+            <div class="square">C</div>
+            <div class="square">E</div>
+          </div>
+          <div class="row">
+            <div class="square">I</div>
+            <div class="square" style="background-color: #ffe434;">D</div>
+            <div class="square">E</div>
+            <div class="square">A</div>
+          </div>
+          <div class="row">
+            <div class="square" style="background-color: #00c750;">W</div>
+            <div class="square"style="background-color: #00c750;">O</div>
+            <div class="square">O</div>
+            <div class="square"style="background-color: #00c750;">D</div>
+          </div>
+          <div class="row">
+            <div class="square2">W</div>
+            <div class="square2">O</div>
+            <div class="square2">R</div>
+            <div class="square2">D</div>
+          </div>
+        </div>
+
+        <div class="center-object" style="margin-top: 10%;">
+          <div class="row">
+            <div class="square">Q</div>
+            <div class="square word">W</div>
+            <div class="square">E</div>
+            <div class="square word">R</div>
+            <div class="square">T</div>
+            <div class="square">Y</div>
+            <div class="square">U</div>
+            <div class="square nope">I</div>
+            <div class="square word">O</div>
+            <div class="square">P</div>
+          </div>
+          <div class="row">
+            <div class="square nope">A</div>
+            <div class="square">S</div>
+            <div class="square word">D</div>
+            <div class="square">F</div>
+            <div class="square">G</div>
+            <div class="square">H</div>
+            <div class="square">J</div>
+            <div class="square">K</div>
+            <div class="square">L</div>
+          </div>
+          <div class="row">
+            <div class="square">Z</div>
+            <div class="square">X</div>
+            <div class="square nope">C</div>
+            <div class="square">V</div>
+            <div class="square">B</div>
+            <div class="square nope">N</div>
+            <div class="square">M</div>
+          </div>
+        </div>
+        
+        
+        
+        
+    		<!--<img src="https://imgs.mongabay.com/wp-content/uploads/sites/20/2021/04/27102307/10-1-768x512.jpg" alt="Busa, PH">-->
     		</div>
   	</div>
 
@@ -276,9 +415,9 @@
     anime({
       targets: ".shaking", // Target elements with the shaking class
       translateX: [
-      { value: '40px', duration: 250, easing: 'easeInOutSine' },
-      { value: '-40px', duration: 250, easing: 'easeInOutSine' },
-      { value: '0px', duration: 200, easing: 'easeInOutSine' },
+        { value: '40px', duration: 250, easing: 'easeInOutSine' },
+        { value: '-40px', duration: 250, easing: 'easeInOutSine' },
+        { value: '0px', duration: 200, easing: 'easeInOutSine' },
       ],
       scale: [
         { value: 1, duration: 500, easing: 'easeInOutSine' }, // Grow bigger
@@ -290,13 +429,52 @@
     });
   }
 
+  // Function to animate fixed object exiting to the left
+  function animateFixedObjectLeft() {
+    anime({
+      targets: '.fixed-object',
+      translateX: '-100%',
+      easing: 'easeInOutQuad',
+      duration: 500
+    });
+  }
+
+  // Function to animate live scroll exiting to the right
+  function animateLiveScrollRight() {
+    anime({
+      targets: '.live-scroll, .cursor-position',
+      translateX: '100%',
+      easing: 'easeInOutQuad',
+      duration: 500
+    });
+  }
+
+  // Function to animate fixed object returning to its original position
+  function animateFixedObjectReturn() {
+    anime({
+      targets: '.fixed-object',
+      translateX: '0',
+      easing: 'easeInOutQuad',
+      duration: 500
+    });
+  }
+
+  // Function to animate live scroll returning to its original position
+  function animateLiveScrollReturn() {
+    anime({
+      targets: '.live-scroll, .cursor-position',
+      translateX: '0',
+      easing: 'easeInOutQuad',
+      duration: 500
+    });
+  }
 
   $(document).ready(function() {
     // Fade in header text when page opens
     $("header").fadeIn(1000);
 
     // Function to handle the click event on image containers
-    $("#92").click(function() {
+    $("#10").click(function() { // changed from 92
       shakeObject($("#90"));
       // Delay the redirection by 1500 milliseconds (1.5 seconds)
       setTimeout(function() {
@@ -311,30 +489,66 @@
 
     // Function to update and display cursor's X and Y position
     $(document).mousemove(function(event) {
-        var cursorX = event.pageX;
-        var cursorY = event.pageY;
-        $(".cursor-position").text("Cursor Position: X=" + cursorX + ", Y=" + cursorY);
+      var cursorX = event.pageX;
+      var cursorY = event.pageY;
+      $(".cursor-position").text("Cursor Position: X=" + cursorX + ", Y=" + cursorY);
     });
 
-  //   // Fade out header text when scrolling down
-  //   $(window).scroll(function() {
-  //       var scrollPosition = $(this).scrollTop();
-  //       var opacity = 1 - (scrollPosition / 12);
-  //       $("header").css("opacity", opacity);
+    // Check window width on page load
+    if ($(window).width() < 1200) {
+      // Animate fixed object exiting to the left
+      animateFixedObjectLeft();
+      // Animate live scroll exiting to the right
+      animateLiveScrollRight();
+      
+      // Define the animation properties for square shrinking
+      var shrinkAnimationProperties = {
+        targets: ['.square', '.square2'],
+        width: '25px',
+        height: '25px',
+        fontSize: '162.5%', // 50% increase in font size
+        easing: 'easeInOutSine', // Use easing for smoother animation
+        duration: 500 // Animation duration in milliseconds
+      };
+      
+      // Apply the shrink animation using Anime.js
+      anime(shrinkAnimationProperties);
+    }
 
-  //       var paddingPercentage = 25 - (scrollPosition); // Change the division factor to adjust the speed of fading
-  //       if (paddingPercentage < 2) paddingPercentage = 0.5; // Ensure padding doesn't go below 2%
-  //       var padding = paddingPercentage + "%";
-  //       $("header").css("padding", padding);
-  //       $("header").css("bottom-padding", padding);
+    // Check window width on window resize
+    $(window).resize(function() {
+      if ($(window).width() < 1200) {
+        // Animate fixed object exiting to the left
+        animateFixedObjectLeft();
+        // Animate live scroll exiting to the right
+        animateLiveScrollRight();
 
-  //       if (scrollPosition > 23) {
-  //           // Limit scrolling to scroll position 25
-  //           $(window).scrollTop(23);
-  //       }
-  //   });
+        // Apply the animation for square shrinking on resize if necessary
+        anime(shrinkAnimationProperties);
+      } else {
+        // Animate fixed object returning to its original position
+        animateFixedObjectReturn();
+        // Animate live scroll returning to its original position
+        animateLiveScrollReturn();
+
+        // Define the animation properties for square growing back
+        var growAnimationProperties = {
+          targets: ['.square', '.square2'],
+          width: '50px', // Original width
+          height: '50px', // Original height
+          fontSize: '325%', // Original font size
+          easing: 'easeInOutSine', // Use easing for smoother animation
+          duration: 500 // Animation duration in milliseconds
+        };
+        
+        // Apply the grow animation using Anime.js
+        anime(growAnimationProperties);
+      }
+    });
   });
 </script>
+
+
 
 </body>
 </html>
