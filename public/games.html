@@ -397,8 +397,8 @@ ul {
             </ul>
         </div>        
 
-        <div class="center-object" style="margin-top: 10%;">
-          <div class="row">
+        <div class="center-object" style="margin-top: 10%;" id="keyboard">
+          <div class="row" id="key1">
             <div class="square3">Q</div>
             <div class="square3">W</div>
             <div class="square3">E</div>
@@ -410,7 +410,7 @@ ul {
             <div class="square3">O</div>
             <div class="square3">P</div>
         </div>
-        <div class="row">
+        <div class="row" id="key2">
             <div class="square3">A</div>
             <div class="square3">S</div>
             <div class="square3">D</div>
@@ -421,7 +421,7 @@ ul {
             <div class="square3">K</div>
             <div class="square3">L</div>
         </div>
-        <div class="row">
+        <div class="row" id="key3">
             <div class="square3">Z</div>
             <div class="square3">X</div>
             <div class="square3">C</div>
@@ -432,7 +432,6 @@ ul {
         </div>
         </div>
         <div class="square" style="background-color: #2B2D2F;"></div>
-        Coming soon...
       </div>
         
         
@@ -451,8 +450,8 @@ ul {
 </main>
 
 
-<div class="live-scroll">Scroll Position: 0px</div>
-<div class="cursor-position">Cursor Position: X=0, Y=0</div>
+<!-- <div class="live-scroll">Scroll Position: 0px</div>
+<div class="cursor-position">Cursor Position: X=0, Y=0</div> -->
 
 
 <script>
@@ -476,6 +475,7 @@ ul {
     autoplay: false
   });
 
+  /*
   // Function to trigger the shaking animation
   function shakeObject(object) {
     object.addClass("shaking"); // Add a class to the clicked object
@@ -536,31 +536,61 @@ ul {
     });
   }
 
-  function compareWordWithWordOfDay() {
-    // Reset the colors of all squares
-    $(".square").removeClass("yellow").removeClass("green").addClass("square");
+  */ 
 
-    // Get the word formed by the user from all squares
-    var userWord = "";
-    for (var i = 1; i <= 16; i++) {
+  function compareWordWithWordOfDay(currentRow) {
+    // Reset the colors of all squares
+    if (currentRow == 1) {
+      $(".yellow").removeClass("yellow").addClass("square");
+      $(".green").removeClass("green").addClass("square");
+    }
+
+    // Calculate the starting index based on the current row
+    let startIndex = (currentRow - 1) * 4 + 1;
+
+    // Get the word formed by the user from the specified row's squares
+    let userWord = "";
+    for (var i = startIndex; i < startIndex + 4; i++) {
         userWord += $("#square" + i).text().trim().toLowerCase();
     }
 
+    let count = 0;
+
     // Iterate over each letter in the user's word and compare with the word of the day
-    for (var i = 0; i < userWord.length; i++) {
+    for (var i = 0; i < 4; i++) {
         var letter = userWord[i];
         // Check if the letter exists in the word of the day
-        if (wordOfDay.includes(letter)) {
+        if (!(wordOfDay.includes(letter))) {
             // If the letter exists, change the corresponding square's class to 'yellow'
-            $("#square" + (i + 1)).removeClass("square").addClass("yellow");
+            $("#square" + (startIndex + i)).removeClass("yellow green").addClass("square");
+        } 
+        else {
+            // If the letter exists, change the corresponding square's class to 'yellow'
+            $("#square" + (startIndex + i)).removeClass("square green").addClass("yellow");
         }
         // Check if the letter is in the correct position
-        if (userWord[i] === wordOfDay[i]) {
+        if (wordOfDay[i] == letter) {
             // If the letter is in the correct position, change the corresponding square's class to 'green'
-            $("#square" + (i + 1)).removeClass("yellow").addClass("green");
+            $("#square" + (startIndex + i)).removeClass("square yellow").addClass("green");
+            count++;
         }
     }
-}
+
+    // Check if the game is won
+    if (count === 4) {
+        $(document).off("keydown");
+        // Clear top row
+        $("#key1").empty();
+        // Clear bottom row
+        $("#key3").empty();
+        // Display "You win" message in the middle row
+        $("#key2").html("<div style='font-size: 24px;'>You got it! Play agin tomorrow</div>");
+    } else {
+      $(document).on("keydown");
+        }
+  }
+
+
 
 
 
@@ -578,6 +608,7 @@ ul {
     var currentRow = 1;
 
     $(document).on("keydown", function(e) {
+
       // Get the keycode of the pressed key
       var keycode = e.keyCode || e.which;
 
@@ -618,6 +649,18 @@ ul {
       }
       // Check if the pressed key is Enter
       else if (keycode == 13) {
+          if (currentRow == 1) {
+                  // Clear squares 13 to 16
+                  $("#square5").text('');
+                  $("#square6").text('');
+                  $("#square7").text('');
+                  $("#square8").text('');
+                  // Clear squares 13 to 16
+                  $("#square9").text('');
+                  $("#square10").text('');
+                  $("#square11").text('');
+                  $("#square12").text('');
+          }
           // Check if there is a letter in square16
           var square16Content = $("#square16").text().trim();
           if (square16Content !== '') {
@@ -633,15 +676,17 @@ ul {
               $("#square15").text('');
               $("#square16").text('');
 
+              compareWordWithWordOfDay(currentRow);
+
               // Increment the counter for the next row
               currentRow++;
 
               // If all rows are filled, reset the counter
-              if (currentRow > 4) {
+              if (currentRow > 3) {
                   currentRow = 1;
               }
 
-              compareWordWithWordOfDay();
+              
           }
       }
     });
@@ -689,7 +734,7 @@ ul {
         }
     }
 
-    $(window).scroll(function() {
+    /*$(window).scroll(function() {
       var scrollPosition = $(this).scrollTop();
       $(".live-scroll").text("Scroll Position: " + scrollPosition);
     });
@@ -720,9 +765,9 @@ ul {
       
       // Apply the shrink animation using Anime.js
       anime(shrinkAnimationProperties);
-    }
+    }*/
 
-    // Check window width on window resize
+    /*// Check window width on window resize
     $(window).resize(function() {
       if ($(window).width() < 1000) {
         // Animate fixed object exiting to the left
@@ -751,7 +796,7 @@ ul {
         // Apply the grow animation using Anime.js
         anime(growAnimationProperties);
       }
-    });
+    }); */
   });
 </script>
 
