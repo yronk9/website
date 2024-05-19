@@ -806,7 +806,7 @@
       else if (keycode == 13) {
           // Check if there is a letter in square16
           var square16Content = $("#input4").text().trim();
-          if (input4 !== '') {
+          if (square16Content !== '') { // Check if input is not empty
               let newRow = createNewRow(currentRow); // Create a new row
               $(".scrollable-container").append(newRow); // Append the new row to the container
               $(".scrollable-container").scrollTop($(".scrollable-container")[0].scrollHeight);
@@ -822,7 +822,6 @@
               charList.push.apply(charList, $("#input3").text().trim().split(''));
               charList.push.apply(charList, square16Content.split(''));
 
-
               // Clear squares 13 to 16
               $("#input1").text('');
               $("#input2").text('');
@@ -831,11 +830,11 @@
 
               compareWordWithWordOfDay(currentRow);
               if (isMobileDevice()) {
-                anime(mobileSize);
+                  anime(mobileSize);
               }
 
               // Iterate through each character in the keyboard
-              $("#keyboard .square3").each(function() {
+              $("#keyboard .square3").each(function () {
                   var char = $(this).text();
                   // Check if the character exists in the charList
                   if (charList.includes(char)) {
@@ -843,14 +842,14 @@
                       if (maybe.includes(char)) {
                           // If it does, add a CSS class to hide the text color
                           $(this).addClass("maybe-color");
-                      }
-                      else {
-                      $(this).addClass("hidden-text-color");
+                      } else {
+                          $(this).addClass("hidden-text-color");
                       }
                   }
               });
           }
       }
+
     });
   
   
