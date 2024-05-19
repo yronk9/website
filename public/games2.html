@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Daily Word</title>
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.2/lib/anime.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  <link href="https://fonts.googleapis.com/css?family=Poppins:600" rel="stylesheet">
+</head>
+
+<style>
+  body {
+    background: #1D1F20;
+    font-family: 'Courier New', sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  header {
+    background-color: #2B2D2F;
+    color: #fff;
+    padding: 10vw; /* Use viewport units */
+    text-align: center;
+    font-size: 1.25rem;
+    margin-bottom: 2%;
+    display: none;
+  }
+
+  main {
+    width: 90%;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0;
+  }
+
+  .fixed-object {
+    position: fixed;
+    top: 2vw;
+    left: 2vw;
+    padding: 1vw;
+    background-color: #2B2D2F;
+    color: #fff;
+    border-radius: 4px;
+    z-index: 1000;
+    text-decoration: none;
+    font-size: 2vw; /* Use viewport units */
+  }
+
+  .cursor-position, .live-scroll {
+    position: fixed;
+    padding: 1vw;
+    background-color: #2B2D2F;
+    color: #fff;
+    border-radius: 4px;
+    z-index: 1000;
+    text-decoration: none;
+    font-size: 2vw; /* Use viewport units */
+  }
+
+  .cursor-position {
+    top: 8vw;
+    right: 2vw;
+  }
+
+  .live-scroll {
+    top: 2vw;
+    right: 2vw;
+  }
+
+  .object {
+    background-color: #2B2D2F;
+    color: #fff;
+    border-radius: 4px;
+    padding: 3vw;
+    margin-bottom: 10vw;
+    max-width: 80%;
+    margin: 2vw auto 0;
+  }
+
+  .object-header {
+    font-size: 1rem;
+    font-weight: bold;
+    margin-bottom: 3%;
+  }
+
+  .object-body {
+    font-size: 0.9rem;
+    font-weight: normal;
+    margin-bottom: 2%;
+  }
+
+  .image-container, .game-container, .wordle-game {
+    margin-bottom: 1%;
+    text-align: center;
+  }
+
+  .image-container img, .game-container img, .wordle-game img {
+    max-width: 100%;
+    border-radius: 8px;
+  }
+
+  .video-container {
+    position: relative;
+    padding-bottom: 56.25%;
+    height: 0;
+    overflow: hidden;
+    margin-bottom: 2%;
+  }
+
+  .video-container iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  .textbox-container {
+    position: relative;
+    margin: 2% auto;
+    margin-bottom: 5%;
+    width: 65%;
+    text-align: center;
+  }
+
+  .textbox {
+    width: 100%;
+    padding: 2%;
+    box-sizing: border-box;
+    border: 2px solid hsl(56, 76%, 65%);
+    border-radius: 4px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.9rem;
+    color: #FFFFFF;
+    background-color: transparent;
+    text-align: center;
+    transition: border-color 0.3s ease;
+  }
+
+  .textbox:focus {
+    border-color: #71DFBE;
+    outline: none;
+  }
+
+  .button {
+    background: #2B2D2F;
+    height: 8vw;
+    width: 20vw;
+    text-align: center;
+    position: relative;
+    margin: 0 auto;
+    margin-bottom: 10%;
+    cursor: pointer;
+    border-radius: 30px;
+    overflow: hidden;
+  }
+
+  .button .text {
+    font: bold 1rem/1 'Poppins';
+    color: hsl(56, 76%, 65%);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    transition: transform 0.3s ease;
+  }
+
+  .button.invalid .text {
+    transform: translate(-50%, -50%) scale(0.8);
+  }
+
+  .progress-bar {
+    position: absolute;
+    height: 10px;
+    width: 0;
+    right: 0;
+    top: 50%;
+    left: 50%;
+    border-radius: 200px;
+    transform: translateY(-50%) translateX(-50%);
+    background: lighten(#2B2D2F, 15%);
+  }
+
+  svg {
+    width: 30px;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%) translateX(-50%);
+    left: 50%;
+    right: 0;
+  }
+
+  .check {
+    fill: none;
+    stroke: #FFFFFF;
+    stroke-width: 3;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  .object + .object {
+    margin-top: 10vw;
+  }
+
+  .object:last-child {
+    margin-bottom: 0;
+  }
+
+  .center-object {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .row {
+    display: flex;
+    justify-content: center;
+  }
+
+  .square, .square3, .square4, .yellow, .green {
+    flex-shrink: 0;
+    width: 12vw; /* Use viewport units */
+    height: 12vw; /* Use viewport units */
+    margin: 1vw;
+    font-size: 8vw; /* Use viewport units */
+    font-weight: bold;
+    border-radius: 7px;
+    text-align: center;
+    line-height: 12vw; /* Match height for centering text */
+  }
+
+  .square {
+    background-color: #0080ff;
+  }
+
+  .square3 {
+    background-color: #363737;
+  }
+
+  .square4 {
+    background-color: #67686aa6;
+  }
+
+  .yellow {
+    background-color: #efd71d;
+  }
+
+  .green {
+    background-color: #00c750;
+  }
+
+  ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  @media only screen and (min-width: 600px) {
+    .square, .square3, .square4, .yellow, .green {
+      width: 6vw;
+      height: 6vw;
+      font-size: 4vw;
+      line-height: 6vw;
+    }
+
+    .fixed-object, .cursor-position, .live-scroll {
+      font-size: 1vw;
+    }
+  }
+</style>
+
+<body>
+  <a href="index.html" class="fixed-object">Yron's Website</a>
+  <div class="fixed-object" style="top: 20px; text-align: center; background-color: #1D1F20;">Yron's Website</div>
+  <a href="index.html" class="fixed-object" style="top: 70px; text-align: center;">Home</a>
+  <a href="games.html" class="fixed-object" style="top: 130px; text-align: center; background-color: #2b2d2f70;">Daily Word</a>
+
+  <main>
+    <div class="object" id="90">
+      <div class="object-header" style="text-align:justify; display:none">Daily Word</div>
+      <div class="center-object">
+        <ul class="row">
+          <li class="square" id="square1"></li>
+          <li class="square" id="square2"></li>
+          <li class="square" id="square3"></li>
+          <li class="square" id="square4"></li>
+        </ul>
+        <ul class="row">
+          <li class="square" id="square5"></li>
+          <li class="square" id="square6"></li>
+          <li class="square" id="square7"></li>
+          <li class="square" id="square8"></li>
+        </ul>
+        <ul class="row">
+          <li class="square" id="square9"></li>
+          <li class="square" id="square10"></li>
+          <li class="square" id="square11"></li>
+          <li class="square" id="square12"></li>
+        </ul>
+        <ul class="row">
+          <li class="square" id="square13"></li>
+          <li class="square" id="square14"></li>
+          <li class="square" id="square15"></li>
+          <li class="square" id="square16"></li>
+        </ul>
+      </div>
+      <div class="textbox-container">
+        <input type="text" id="textbox" class="textbox" placeholder="Enter text">
+      </div>
+      <div class="button" id="button">
+        <div class="progress-bar" id="progress-bar"></div>
+        <span class="text" id="button-text">Submit</span>
+      </div>
+    </div>
+  </main>
+
+  <div class="cursor-position">Cursor Position: <span id="cursor-coordinates"></span></div>
+  <div class="live-scroll">Scroll Position: <span id="scroll-coordinates"></span></div>
+
+  <script>
+    $(document).ready(function() {
+      var buttonText = $("#button-text");
+      var button = $("#button");
+      var progressBar = $("#progress-bar");
+
+      var squares = $(".square");
+
+      squares.each(function() {
+        var $square = $(this);
+        $square.text("W");
+      });
+
+      $("#button").on("click", function() {
+        var inputText = $("#textbox").val().trim();
+        if (inputText === "") {
+          button.addClass("invalid");
+          buttonText.text("Invalid!");
+          setTimeout(function() {
+            button.removeClass("invalid");
+            buttonText.text("Submit");
+          }, 1000);
+          return;
+        }
+        buttonText.text("Processing...");
+        progressBar.css("width", "0");
+        anime({
+          targets: progressBar[0],
+          width: "100%",
+          duration: 3000,
+          easing: "easeInOutQuad",
+          complete: function() {
+            buttonText.text("Complete!");
+            setTimeout(function() {
+              buttonText.text("Submit");
+              progressBar.css("width", "0");
+            }, 1000);
+          }
+        });
+      });
+
+      $(document).on("mousemove", function(event) {
+        $("#cursor-coordinates").text("(" + event.pageX + ", " + event.pageY + ")");
+      });
+
+      $(window).on("scroll", function() {
+        var scrollTop = $(this).scrollTop();
+        $("#scroll-coordinates").text(scrollTop + "px");
+      });
+    });
+  </script>
+</body>
+</html>

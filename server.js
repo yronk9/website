@@ -17,7 +17,6 @@ app.use(bodyParser.json()); // Parse JSON bodies
 // Serve static files from the "public" directory
 app.use(express.static(path.join(__dirname, 'public')));
 
-
 // Endpoint to save notes
 app.post('/saveFiles', async (req, res) => {
     try {

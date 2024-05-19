@@ -14,6 +14,10 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 
   header {
@@ -230,7 +234,9 @@
   }
 
   .center-object {
-    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
   }
 
   /*
@@ -260,19 +266,7 @@
     font-size: 325%; /* adjust the font size of the character */
     font-weight: bold;
     border-radius: 7px;
-  }
-
-
-  .square2 {
-    flex-shrink: 0;
-    width: 50px; 
-    height: 50px; 
-    background-color: #00c750; /* win color */
-    margin: 5px; 
-    margin-top: 10%; /* adjust the spacing between squares */
-    font-size: 325%; /* adjust the font size of the character */
-    font-weight: bold;
-    border-radius: 7px;
+    text-align: center;
   }
 
   .square3 {
@@ -284,10 +278,10 @@
     font-size: 325%; /* adjust the font size of the character */
     font-weight: bold;
     border-radius: 7px;
+    text-align: center;
   }
 
   .square4 {
-    flex-shrink: 0; /* prevent squares from stretching */
     width: 50px; /* adjust the size of the squares */
     height: 50px; /* adjust the size of the squares */
     background-color: #67686aa6; /* default color */
@@ -295,18 +289,11 @@
     font-size: 325%; /* adjust the font size of the character */
     font-weight: bold;
     border-radius: 7px;
-  }
-
-  .word {
-    background-color: #00c750;
-  }
-
-  .nope {
-    opacity: 0.5; /* Adjust the opacity value as needed */
+    text-align: center;
   }
 
   .yellow {
-    background-color: #fee73a;
+    background-color: #efd71d;
     flex-shrink: 0; /* prevent squares from stretching */
     width: 50px; /* adjust the size of the squares */
     height: 50px; /* adjust the size of the squares */
@@ -314,6 +301,7 @@
     font-size: 325%; /* adjust the font size of the character */
     font-weight: bold;
     border-radius: 7px;
+    text-align: center;
   }
 
   .green {
@@ -325,19 +313,21 @@
     font-size: 325%; /* adjust the font size of the character */
     font-weight: bold;
     border-radius: 7px;
+    text-align: center;
   }
 
+  /*
   @media only screen and (max-width: 1000px) {
   .square {
-    width: 10%; /* Shrink the width by 50% */
-    height: 25px; /* Shrink the height by 50% */
-    font-size: 162.5%; /* Shrink the font size by 50% */
+    width: 10%; /* Shrink the width by 50% 
+    height: 25px; /* Shrink the height by 50% 
+    font-size: 162.5%; /* Shrink the font size by 50% 
   }
 
   .square2 {
-    width: 25px; /* Shrink the width by 50% */
-    height: 25px; /* Shrink the height by 50% */
-    font-size: 162.5%; /* Shrink the font size by 50% */
+    width: 25px; /* Shrink the width by 50% 
+    height: 25px; /* Shrink the height by 50% 
+    font-size: 162.5%; /* Shrink the font size by 50% 
   }
 }
 
@@ -345,10 +335,6 @@
 ul {
     list-style: none;
 }
-
-
-
-
 
 </style>
 
@@ -364,11 +350,9 @@ ul {
 
 
 <main>
-  	<div class="object" id="90" style="justify-content: center; align-items: center;">
-    	<div class="object-header"; style="text-align: center;">Daily Word</div>
-    	<div class="object-body wordle-game" id="92">
+  	<div class="object" id="90">
+    	<div class="object-header" style="text-align:justify; display:none">Daily Word</div>
         <div class="center-object">
-          <div id="app">
             <ul class="row">
                 <li class="square" id="square1"></li>
                 <li class="square" id="square2"></li>
@@ -472,6 +456,10 @@ ul {
   var basicTimeline = anime.timeline({
     autoplay: false
   });
+
+  function isMobileDevice() {
+            return (typeof window.orientation !== "undefined") || (navigator.userAgent.indexOf('IEMobile') !== -1);
+        }
 
   /*
   // Function to trigger the shaking animation
@@ -601,6 +589,12 @@ ul {
     // for (var i = 0; i < wordOfDay.length; i++) {
     //     $("#square" + (i + 9)).text(wordOfDay[i].toUpperCase());
     // }
+
+    if (isMobileDevice()) {
+          window.onload = openKeyboard;
+        } else {
+            alert("You are not browsing from a mobile device.");
+        }
 
     // Define a counter to keep track of the current row
     var currentRow = 1;
@@ -745,45 +739,7 @@ ul {
     });
     */
 
-    // Check window width on page load
-    if ($(window).width() < 1000) {
-      // Animate fixed object exiting to the left
-      // animateFixedObjectLeft();
-      // // Animate live scroll exiting to the right
-      // animateLiveScrollRight();
-      
-      // Define the animation properties for square shrinking
-      var shrinkAnimationProperties = {
-        targets: ['.square', '.green', '.yellow', '.square3'],
-        width: '35px',
-        height: '35px',
-        fontSize: '225%', // 50% increase in font size
-        easing: 'easeInOutSine', // Use easing for smoother animation
-        duration: 500 // Animation duration in milliseconds
-      };
-      
-      // Apply the shrink animation using Anime.js
-      anime(shrinkAnimationProperties);
-    }
-
-    // Check window width on window resize
-    $(window).resize(function() {
-      if ($(window).width() < 1000) {
-        // Animate fixed object exiting to the left
-        // animateFixedObjectLeft();
-        // // Animate live scroll exiting to the right
-        // animateLiveScrollRight();
-
-        // Apply the animation for square shrinking on resize if necessary
-        anime(shrinkAnimationProperties);
-      } else {
-        // // Animate fixed object returning to its original position
-        // animateFixedObjectReturn();
-        // // Animate live scroll returning to its original position
-        // animateLiveScrollReturn();
-
-        // Define the animation properties for square growing back
-        var growAnimationProperties = {
+    var growAnimationProperties = {
           targets: ['.square', '.square4', '.square3'],
           width: '50px', // Original width
           height: '50px', // Original height
@@ -791,7 +747,57 @@ ul {
           easing: 'easeInOutSine', // Use easing for smoother animation
           duration: 500 // Animation duration in milliseconds
         };
-        
+    
+    var shrinkAnimationProperties = {
+        targets: ['.square', '.green', '.yellow', '.square3'],
+        width: '35px',
+        height: '35px',
+        fontSize: '225%', // 50% increase in font size
+        easing: 'easeInOutSine', // Use easing for smoother animation
+        duration: 500 // Animation duration in milliseconds
+      };
+
+   var animateFixedObjectLeft = {
+        targets: ['.fixed-object'],
+        translateX: '-250px', // Adjust the value to move left
+        easing: 'easeInOutSine', // Use easing for smoother animation
+        duration: 500 // Animation duration in milliseconds
+      };
+
+    var animateFixedObjectReturn = {
+        targets: ['.fixed-object'],
+        translateX: '0px', // Adjust the value to move left
+        easing: 'easeInOutSine', // Use easing for smoother animation
+        duration: 500 // Animation duration in milliseconds
+      };
+
+    // Check window width on page load
+    if ($(window).width() < 1000) {
+      // Animate fixed object exiting to the left
+      anime(animateFixedObjectLeft);
+      // Apply the shrink animation using Anime.js
+      anime(shrinkAnimationProperties);
+    }
+
+    if ($(window).width() > 1000) {
+      // Animate fixed object exiting to the left
+      anime(animateFixedObjectReturn);
+      // Apply the shrink animation using Anime.js
+      anime(growAnimationProperties);
+    }
+
+    // Check window width on window resize
+    $(window).resize(function() {
+      if ($(window).width() < 1000) {
+        // Animate fixed object exiting to the left
+        anime(animateFixedObjectLeft);
+
+        // Apply the animation for square shrinking on resize if necessary
+        anime(shrinkAnimationProperties);
+      } else {
+        // // Animate fixed object returning to its original position
+        anime(animateFixedObjectReturn);
+
         // Apply the grow animation using Anime.js
         anime(growAnimationProperties);
       }
