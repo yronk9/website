@@ -274,11 +274,21 @@
     width: 7vw; /* adjust the size of the squares */
     height: 7vw; /* adjust the size of the squares */
     background-color: #363737; /* default color */
-    margin: 8px; /* adjust the spacing between squares */
+    margin: 3px; /* adjust the spacing between squares */
+    margin-bottom: 10px;
     font-size: 250%; /* adjust the font size of the character */
     font-weight: bold;
     border-radius: 7px;
     text-align: center;
+  }
+
+  .hidden-text-color {
+      color: transparent !important; /* hide the text color */
+  }
+
+  .maybe-color {
+      color: white;
+      background-color: #efd71d;
   }
 
   .square4 {
@@ -355,6 +365,51 @@
     overflow-y: auto;
    }
 
+   #instructions-banner {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%; /* Set height to 100% to fill the entire screen */
+    background-color: #f0f0f0;
+    padding: 20px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    z-index: 9999;
+    overflow: auto; /* Add overflow to enable scrolling if content overflows */
+    box-sizing: border-box; /* Ensure padding is included in the width and height */
+  }
+
+  .playnow {
+    background-color: #00c750;
+    color: #f0f0f0;
+    width: 50vw; /* adjust the size of the squares */
+    height: 10vw; /* adjust the size of the squares */
+    margin: auto; /* center horizontally */
+    margin-top: 60px;
+    font-size: 300%; /* adjust the font size of the character */
+    font-weight: bold;
+    border-radius: 20px;
+    text-align: center;
+    display: flex;
+    justify-content: center; /* center horizontally */
+    align-items: center; /* center vertically */
+  }
+
+
+
+
+  .instructions-content {
+      text-align: center;
+  }
+
+  .close-button {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      cursor: pointer;
+  }
+
+
 </style>
 
 <body>
@@ -364,6 +419,36 @@
 <a href="navigation.html" class="fixed-object" style="top: 130px; text-align: center;">Photos</a>
 <a href="update.html" class="fixed-object" style="top: 190px; text-align: center;">History</a> 
 <a href="games.html" class="fixed-object" style="top: 130px; text-align: center; background-color: #2b2d2f70;">Daily Word</a> -->
+
+<div id="instructions-banner">
+  <div class="instructions-content">
+      <span class="close-button" onclick="closeInstructions()">X</span>
+      <h2>How to Play the Game</h2>
+      <p>Daily Word is a game where you guess a 4-letter word.</p>
+      <ul class="row">
+        <li class="square4" style="color: white;">W</li>
+        <li class="square4" style="color: white;">O</li>
+        <li class="square4" style="color: white;">R</li>
+        <li class="square4" style="color: white;">D</li>
+      </ul>
+      <p>Type in a 4-letter word and hit return to make a guess.</p>
+      <ul class="row">
+        <li class="square" style="color: white;">S</li>
+        <li class="yellow" style="color: white;">E</li>
+        <li class="green" style="color: white;">M</li>
+        <li class="yellow" style="color: white;">I</li>
+      </ul>
+      <p>Yellow means the letter is right, but it's in the wrong place.</p>
+      <ul class="row">
+        <li class="green" style="color: white;">T</li>
+        <li class="green" style="color: white;">I</li>
+        <li class="green" style="color: white;">M</li>
+        <li class="green" style="color: white;">E</li>
+      </ul>
+      <p>Green means that it's the right letter in the correct spot!</p>
+      <a class="playnow">START</a>
+  </div>
+</div>
 
 
 <main>
@@ -382,11 +467,11 @@
           <li class="square4" id="input4"></li>
       </ul>
         <div class="text" id="guess" style="text-align: center; font-size: large; margin-top: 20px;">No. of guesses: 0</div>     
-        <div class="text" id="nooo" style="text-align: center; font-size: large; margin-top: 60px;">
+        <!--<div class="text" id="nooo" style="text-align: center; font-size: large; margin-top: 60px;">
           I recreated 'Wordle' to feature a four-letter format. <br><br> If you like it, let me know! <br><br>
           Instagram: <a href="https://www.instagram.com/y.ro.n/" target="_blank" style="color: rgb(99, 99, 255);"">@y.ro.n</a> LinkedIn: <a href="https://ca.linkedin.com/in/yron" target="_blank" style="color: rgb(99, 99, 255);">yron</a><br><br>
           Email: <a href="mailto:ykgerona@gmail.com" style="color: rgb(99, 99, 255);">ykgerona@gmail.com</a>
-      </div>
+      </div>-->
       
 
         <div class="center-object" style="margin-top: 10%; display: none;" id="keyboard">
@@ -445,6 +530,9 @@
   let numberOfGuesses = 0;
 
   let currentRow = 1;
+
+  var charList = [];
+  var maybe = [];
 
   // Create a new Date object for the current date
   const currentDate = new Date();
@@ -572,6 +660,8 @@
         else {
             // If the letter exists, change the corresponding square's class to 'yellow'
             $("#square" + (startIndex + i)).removeClass("square green").addClass("yellow");
+            var char = $("#square" + (startIndex + i)).text().trim();
+            maybe.push(char);
         }
         // Check if the letter is in the correct position
         if (wordOfDay[i] == letter) {
@@ -605,6 +695,8 @@
   
   function setMobileResolution() {
 
+
+
     
     // // Set viewport width
     var viewportMetaTag = document.querySelector('meta[name="viewport"]');
@@ -615,7 +707,30 @@
     document.body.style.overflowY = 'hidden';
   } 
 
+    // Function to close the instructions banner
+  function closeInstructions() {
+      var banner = document.getElementById("instructions-banner");
+      banner.style.display = "none";
+  }
+
   $(document).ready(function() {
+
+    $(".playnow").hover(function() {
+        $(this).animate({
+            width: '55vw', // Increase width
+            height: '27.5vw' // Increase height
+        }, 'fast');
+    }, function() {
+        $(this).animate({
+            width: '50vw', // Restore original width
+            height: '25vw' // Restore original height
+        }, 'fast');
+    });
+
+    $(".playnow").click(function() {
+        closeInstructions();
+    });
+
 
     // // Fill squares 9 to 12 with letters from the word of the day
     // for (var i = 0; i < wordOfDay.length; i++) {
@@ -686,6 +801,13 @@
               $("#square" + (currentRow * 4 - 1)).text($("#input3").text().trim());
               $("#square" + (currentRow * 4)).text(square16Content);
 
+              // Add characters used to the list
+              charList.push.apply(charList, $("#input1").text().trim().split(''));
+              charList.push.apply(charList, $("#input2").text().trim().split(''));
+              charList.push.apply(charList, $("#input3").text().trim().split(''));
+              charList.push.apply(charList, square16Content.split(''));
+
+
               // Clear squares 13 to 16
               $("#input1").text('');
               $("#input2").text('');
@@ -696,6 +818,22 @@
               if (isMobileDevice()) {
                 anime(mobileSize);
               }
+
+              // Iterate through each character in the keyboard
+              $("#keyboard .square3").each(function() {
+                  var char = $(this).text();
+                  // Check if the character exists in the charList
+                  if (charList.includes(char)) {
+                      // If it does, add a CSS class to hide the text color
+                      if (maybe.includes(char)) {
+                          // If it does, add a CSS class to hide the text color
+                          $(this).addClass("maybe-color");
+                      }
+                      else {
+                      $(this).addClass("hidden-text-color");
+                      }
+                  }
+              });
           }
       }
     });
