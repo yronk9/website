@@ -469,9 +469,12 @@
         <div class="text" id="guess" style="text-align: center; font-size: large; margin-top: 20px;">No. of guesses: 0</div>     
         <div class="text" id="nooo" style="text-align: center; font-size: large; margin-top: 60px;">
           <span id="good-luck-message">Good luck!</span><br><br><br><br><br>
-          Instagram: <a href="https://www.instagram.com/y.ro.n/" target="_blank" style="color: rgb(99, 99, 255);"">@y.ro.n</a> LinkedIn: <a href="https://ca.linkedin.com/in/yron" target="_blank" style="color: rgb(99, 99, 255);">yron</a><br><br>
-          Email: <a href="mailto:ykgerona@gmail.com" style="color: rgb(99, 99, 255);">ykgerona@gmail.com</a>
-        </div>
+          <div id="contact-info" style="display: none;">
+              Instagram: <a href="https://www.instagram.com/y.ro.n/" target="_blank" style="color: rgb(99, 99, 255);"">@y.ro.n</a> LinkedIn: <a href="https://ca.linkedin.com/in/yron" target="_blank" style="color: rgb(99, 99, 255);">yron</a><br><br>
+              Email: <a href="mailto:ykgerona@gmail.com" style="color: rgb(99, 99, 255);">ykgerona@gmail.com</a>
+          </div>
+      </div>
+      
       
       
 
@@ -680,6 +683,7 @@
         $(document).off("keydown");
         // Example usage:
         changeGoodLuckMessage("Play again tomorrow! :)");
+        document.getElementById("contact-info").style.display = "block";
       }
       else {
         $(document).off("keydown");
