@@ -468,10 +468,11 @@
       </ul>
         <div class="text" id="guess" style="text-align: center; font-size: large; margin-top: 20px;">No. of guesses: 0</div>     
         <div class="text" id="nooo" style="text-align: center; font-size: large; margin-top: 60px;">
-          Good luck! <br><br><br><br><br>
+          <span id="good-luck-message">Good luck!</span><br><br><br><br><br>
           Instagram: <a href="https://www.instagram.com/y.ro.n/" target="_blank" style="color: rgb(99, 99, 255);"">@y.ro.n</a> LinkedIn: <a href="https://ca.linkedin.com/in/yron" target="_blank" style="color: rgb(99, 99, 255);">yron</a><br><br>
           Email: <a href="mailto:ykgerona@gmail.com" style="color: rgb(99, 99, 255);">ykgerona@gmail.com</a>
-      </div>
+        </div>
+      
       
 
         <div class="center-object" style="margin-top: 10%; display: none;" id="keyboard">
@@ -632,6 +633,7 @@
 
 
   function compareWordWithWordOfDay() {
+    changeGoodLuckMessage(" ");
     // Increment the number of guesses each time the function is called
     numberOfGuesses++;
 
@@ -676,6 +678,8 @@
       if (isMobileDevice()) {
         alert("Congratulations!\nYou guessed the word in " + numberOfGuesses + " guesses.\nPlay again tomorrow!");
         $(document).off("keydown");
+        // Example usage:
+        changeGoodLuckMessage("Play again tomorrow! :)");
       }
       else {
         $(document).off("keydown");
@@ -712,6 +716,13 @@
       var banner = document.getElementById("instructions-banner");
       banner.style.display = "none";
   }
+
+  function changeGoodLuckMessage(newMessage) {
+    var goodLuckSpan = document.getElementById("good-luck-message");
+    if (goodLuckSpan) {
+        goodLuckSpan.textContent = newMessage;
+    }
+}
 
   $(document).ready(function() {
 
