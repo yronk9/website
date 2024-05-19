@@ -22,7 +22,7 @@
   }
 
   header {
-    background-color: #2B2D2F;
+    background-color: #2B2D2F00;
     color: #fff;
     padding: 25%;
     text-align: center;
@@ -40,12 +40,10 @@
 
   .fixed-object {
     position: fixed;
-    top: 20px; /* Adjust top position as needed */
-    left: 20px; /* Adjust left position as needed */
-    padding: 10px; /* Add padding as needed */
-    width: calc(100vw / 8); /* Make the object 1/8 of the viewport width */
+    padding: 30px; /* Add padding as needed */
+   /* width: calc(100vw); /* Make the object 1/4 of the viewport width */
     font-size: medium;
-    background-color: #2B2D2F;
+    background-color: #2b2d2f00;
     color: #fff;
     border-radius: 4px;
     z-index: 1000; /* Ensure the object is above other content */
@@ -256,6 +254,7 @@
   .row {
     display: flex;
     justify-content: center;
+    margin-bottom: -10px;
   }
 
   .square {
@@ -263,10 +262,10 @@
     width: 15vw; /* adjust the size of the squares */
     height: 15vw; /* adjust the size of the squares */
     background-color: #0080ff; /* default color */
-    margin: 15px; /* adjust the spacing between squares */
+    margin: 10px; /* adjust the spacing between squares */
     font-size: 480%; /* adjust the font size of the character */
     font-weight: bold;
-    border-radius: 7px;
+    border-radius: 20px;
     text-align: center;
   }
 
@@ -275,7 +274,7 @@
     width: 7vw; /* adjust the size of the squares */
     height: 7vw; /* adjust the size of the squares */
     background-color: #363737; /* default color */
-    margin: 5px; /* adjust the spacing between squares */
+    margin: 8px; /* adjust the spacing between squares */
     font-size: 250%; /* adjust the font size of the character */
     font-weight: bold;
     border-radius: 7px;
@@ -286,10 +285,10 @@
     width: 15vw; /* adjust the size of the squares */
     height: 15vw; /* adjust the size of the squares */
     background-color: #67686aa6; /* default color */
-    margin: 15px; /* adjust the spacing between squares */
+    margin: 10px; /* adjust the spacing between squares */
     font-size: 480%; /* adjust the font size of the character */
     font-weight: bold;
-    border-radius: 7px;
+    border-radius: 20px;
     text-align: center;
   }
 
@@ -298,10 +297,10 @@
     flex-shrink: 0; /* prevent squares from stretching */
     width: 15vw; /* adjust the size of the squares */
     height: 15vw; /* adjust the size of the squares */
-    margin: 15px; /* adjust the spacing between squares */
+    margin: 10px; /* adjust the spacing between squares */
     font-size: 480%; /* adjust the font size of the character */
     font-weight: bold;
-    border-radius: 7px;
+    border-radius: 20px;
     text-align: center;
   }
 
@@ -310,10 +309,10 @@
     flex-shrink: 0; /* prevent squares from stretching */
     width: 15vw; /* adjust the size of the squares */
     height: 15vw; /* adjust the size of the squares */
-    margin: 15px; /* adjust the spacing between squares */
+    margin: 10px; /* adjust the spacing between squares */
     font-size: 480%; /* adjust the font size of the character */
     font-weight: bold;
-    border-radius: 7px;
+    border-radius: 20px;
     text-align: center;
   }
 
@@ -344,8 +343,8 @@
    #invisinput {
       caret-color: transparent;
       justify-content: center;
-      height: 40px;
-      font-size: xx-large;
+      height: 30px;
+      font-size: large;
       background-color: #2B2D2F;
       color: #363737;
    }
@@ -355,7 +354,7 @@
 
 <body>
 
-<div class="fixed-object" style="top: 20px; text-align: center; background-color: #1D1F20;">Yron's Website</div>
+<div class="fixed-object" style="top: 60px; font-size: large; background-color: #146e38;">Yron's Website</div>
 <!-- <a href="index.html" class="fixed-object" style="top: 70px; text-align: center;">Home</a>
 <a href="navigation.html" class="fixed-object" style="top: 130px; text-align: center;">Photos</a>
 <a href="update.html" class="fixed-object" style="top: 190px; text-align: center;">History</a> 
@@ -366,7 +365,6 @@
   	<div class="object" id="90">
     	<div class="object-header" style="text-align:justify; display:none">Daily Word</div>
         <div class="center-object">
-            <li class="square" id="square0" style="background-color: #0080ff00; color: #0080ff00; margin: 0%;"></li>
             <input type="text" id="invisinput" placeholder="tap to open keyboard" style="text-align: center;">
         
 
@@ -395,8 +393,8 @@
                 <li class="square4" id="square15"></li>
                 <li class="square4" id="square16"></li>
             </ul>
-            
-        </div>        
+        </div>   
+        <div class="text" id="guess" style="text-align: center; font-size: large; margin-top: 20px;">No. of guesses: 0</div>     
         
         <div class="center-object" style="margin-top: 10%; display: none;" id="keyboard">
           <div class="row" id="key1">
@@ -433,13 +431,8 @@
         </div>
         </div>
       </div>
-        
-        
-        
-        
-    		<!--<img src="https://imgs.mongabay.com/wp-content/uploads/sites/20/2021/04/27102307/10-1-768x512.jpg" alt="Busa, PH">-->
-    		</div>
   	</div>
+    
 
 	<!--<div class="object" id="91">
 		<div class="object-header"; style="text-align: center;">this is a game</div>
@@ -455,6 +448,8 @@
 
 
 <script>
+  // Define a global variable to store the number of guesses
+  let numberOfGuesses = 0;
   // Create a new Date object for the current date
   const currentDate = new Date();
 
@@ -543,6 +538,12 @@
   */ 
 
   function compareWordWithWordOfDay(currentRow) {
+    // Increment the number of guesses each time the function is called
+    numberOfGuesses++;
+
+    // Update the display of the number of guesses
+    $("#guess").text("No. of guesses: " + numberOfGuesses);
+
     // Reset the colors of all squares
     if (currentRow == 1) {
       $(".yellow").removeClass("yellow").addClass("square");
@@ -583,7 +584,7 @@
     // Check if the game is won
     if (count === 4) {
       if (isMobileDevice()) {
-        alert("You got it! Play agin tomorrow...");
+        alert("Congratulations!\nYou guessed the word in " + numberOfGuesses + " guesses.\nPlay again tomorrow!");
         $(document).off("keydown");
       }
       else {
@@ -602,15 +603,11 @@
 
   
   function setMobileResolution() {
-    // // iPhone resolution
-    var iphoneWidth = 980; // iPhone width in pixels
 
-    // // Set document width
-    document.documentElement.style.width = iphoneWidth + "px";
     
     // // Set viewport width
     var viewportMetaTag = document.querySelector('meta[name="viewport"]');
-    viewportMetaTag.setAttribute('content', 'width=' + iphoneWidth + ', initial-scale=1, maximum-scale=1, user-scalable=0');
+    viewportMetaTag.setAttribute('content', 'initial-scale=1, maximum-scale=1, user-scalable=0');
 
     // Disable body scrolling
     document.body.style.overflowX = 'hidden';
@@ -781,6 +778,7 @@
           targets: ['.square', '.green', '.yellow', '.square4'],
           width: '5vw', // Original width
           height: '5vw', // Original height
+          margin: '7px',
           fontSize: '350%', // Original font size
           easing: 'easeInOutSine', // Use easing for smoother animation
           duration: 500 // Animation duration in milliseconds
@@ -790,6 +788,7 @@
         targets: ['.square', '.green', '.yellow', '.square4'],
         width: '15vw',
         height: '15vw',
+        margin: '7px',
         fontSize: '480%', // 50% increase in font size
         easing: 'easeInOutSine', // Use easing for smoother animation
         duration: 500 // Animation duration in milliseconds
@@ -797,9 +796,12 @@
 
     var mobileSize = {
           targets: ['.square', '.green', '.yellow', '.square4'],
-          width: '40vw', // Original width
-          height: '40vw', // Original height
-          fontSize: '800%', // Original font size
+          translateX: '-20px',
+          width: '18vw', // Original width
+          height: '18vw', // Original height
+          fontSize: '380%', // Original font size
+          borderRadius: '12px',
+          margin: '2px',
           easing: 'easeInOutSine', // Use easing for smoother animation
           duration: 500 // Animation duration in milliseconds
         };
@@ -824,10 +826,10 @@
 
    var animateFixedObjectLeft = {
         targets: ['.fixed-object'],
-        translateX: '-250px', // Adjust the value to move left
+        translateX: '-2500px', // Adjust the value to move left
         easing: 'easeInOutSine', // Use easing for smoother animation
-        delay: 1000,
-        duration: 500 // Animation duration in milliseconds
+        delay: 1500,
+        duration: 750 // Animation duration in milliseconds
       };
 
     var animateFixedObjectReturn = {
