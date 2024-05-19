@@ -1011,68 +1011,70 @@
 
 
   function compareWordWithWordOfDay() {
-    changeGoodLuckMessage(" ");
-    // Increment the number of guesses each time the function is called
-    numberOfGuesses++;
+      changeGoodLuckMessage(" ");
+      // Increment the number of guesses each time the function is called
+      numberOfGuesses++;
 
-    // Update the display of the number of guesses
-    $("#guess").text("No. of guesses: " + numberOfGuesses);
+      // Update the display of the number of guesses
+      $("#guess").text("No. of guesses: " + numberOfGuesses);
 
-    // Calculate the starting index based on the current row
-    let startIndex = (currentRow - 1) * 4 + 1;        
+      // Calculate the starting index based on the current row
+      let startIndex = (currentRow - 1) * 4 + 1;
 
-    // Get the word formed by the user from the specified row's squares
-    let userWord = "";
-    for (var i = startIndex; i < startIndex + 4; i++) {
-        userWord += $("#square" + i).text().trim().toLowerCase();
-    }
-
-    let count = 0;
-
-    // Iterate over each letter in the user's word and compare with the word of the day
-    for (var i = 0; i < 4; i++) {
-        var letter = userWord[i];
-        // Check if the letter exists in the word of the day
-        if (!(wordOfDay.includes(letter))) {
-            // If the letter exists, change the corresponding square's class to 'yellow'
-            $("#square" + (startIndex + i)).removeClass("yellow green").addClass("square");
-        } 
-        else {
-            // If the letter exists, change the corresponding square's class to 'yellow'
-            $("#square" + (startIndex + i)).removeClass("square green").addClass("yellow");
-            var char = $("#square" + (startIndex + i)).text().trim();
-            maybe.push(char);
-        }
-        // Check if the letter is in the correct position
-        if (wordOfDay[i] == letter) {
-            // If the letter is in the correct position, change the corresponding square's class to 'green'
-            $("#square" + (startIndex+ i )).removeClass("square yellow").addClass("green");
-            count++;
-        }
-    }
-
-    // Check if the game is won
-    if (count === 4) {
-      if (isMobileDevice()) {
-        alert("Congratulations!\nYou found the word in " + numberOfGuesses + " guesses.");
-        $(document).off("keydown");
-        // Example usage:
-        changeGoodLuckMessage("Play again tomorrow! :)");
-        document.getElementById("contact-info").style.display = "block";
+      // Get the word formed by the user from the specified row's squares
+      let userWord = "";
+      for (var i = startIndex; i < startIndex + 4; i++) {
+          userWord += $("#square" + i).text().trim().toLowerCase();
       }
-      else {
-        $(document).off("keydown");
-        // Clear top row
-        $("#key1").empty();
-        // Clear bottom row
-        $("#key3").empty();
-        // Display "You win" message in the middle row
-        $("#key2").html("<div style='font-size: 24px;'>You got it! Play agin tomorrow</div>");
+
+      let count = 0;
+      let greenLetters = []; // Array to store positions of green letters
+
+      // Iterate over each letter in the user's word and compare with the word of the day
+      for (var i = 0; i < 4; i++) {
+          var letter = userWord[i];
+          // Check if the letter exists in the word of the day
+          if (!(wordOfDay.includes(letter))) {
+              // If the letter exists, change the corresponding square's class to 'yellow'
+              $("#square" + (startIndex + i)).removeClass("yellow green").addClass("square");
+          } else {
+              // If the letter exists and it's not already marked green in the word of the day, change the corresponding square's class to 'yellow'
+              if (!(greenLetters.includes(letter))) {
+                  $("#square" + (startIndex + i)).removeClass("square green").addClass("yellow");
+              }
+              var char = $("#square" + (startIndex + i)).text().trim();
+              maybe.push(char);
+          }
+          // Check if the letter is in the correct position
+          if (wordOfDay[i] == letter) {
+              // If the letter is in the correct position, change the corresponding square's class to 'green'
+              $("#square" + (startIndex + i)).removeClass("square yellow").addClass("green");
+              greenLetters.push(letter); // Mark this letter as green
+              count++;
+          }
       }
-    } else {
-      currentRow++;
-      $(document).on("keydown");
-        }
+
+      // Check if the game is won
+      if (count === 4) {
+          if (isMobileDevice()) {
+              alert("Congratulations!\nYou found the word in " + numberOfGuesses + " guesses.");
+              $(document).off("keydown");
+              // Example usage:
+              changeGoodLuckMessage("Play again tomorrow! :)");
+              document.getElementById("contact-info").style.display = "block";
+          } else {
+              $(document).off("keydown");
+              // Clear top row
+              $("#key1").empty();
+              // Clear bottom row
+              $("#key3").empty();
+              // Display "You win" message in the middle row
+              $("#key2").html("<div style='font-size: 24px;'>You got it! Play again tomorrow</div>");
+          }
+      } else {
+          currentRow++;
+          $(document).on("keydown");
+      }
   }
 
   
@@ -1124,8 +1126,18 @@
     $(".square4").on('click', function() {
         if (isMobileDevice()) {
             $('#invisinput').focus();
+            anime(animateFixedObjectLeft);
         }
+        
     });
+
+    $("#invisinput").on("blur", function() {
+    // Code to execute when #invisinput loses focus
+    // For example, you can call a function or perform any other action
+    if (isMobileDevice()) {
+            anime(animateFixedObjectReturn);
+        }
+});
 
 
     // // Fill squares 9 to 12 with letters from the word of the day
@@ -1343,20 +1355,19 @@
         targets: ['.fixed-object'],
         translateY: '-500px', // Adjust the value to move left
         easing: 'easeInOutSine', // Use easing for smoother animation
-        delay: 3000,
+        delay: 100,
         duration: 2000 // Animation duration in milliseconds
       };
 
     var animateFixedObjectReturn = {
         targets: ['.fixed-object'],
-        translateX: '-2500px', // Adjust the value to move left
+        translateY: '0px', // Adjust the value to move left
         easing: 'easeInOutSine', // Use easing for smoother animation
-        delay: 1000,
-        duration: 500 // Animation duration in milliseconds
+        delay: 100,
+        duration: 2000 // Animation duration in milliseconds
       };
 
     if (isMobileDevice()) {
-      anime(animateFixedObjectLeft);
       anime(mobileSize);
       return;
     }
