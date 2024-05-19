@@ -1231,6 +1231,19 @@
                         alert("Congratulations!\nYou found the word in " + numberOfGuesses + " guesses.");
                     }, 1500);
                   }
+              } else {
+                            // Check window width on page load
+                if ($(window).width() < 1000) {
+                  // Apply the shrink animation using Anime.js
+                  anime(shrinkAnimationProperties);
+                  anime(shrinkKB);
+                }
+
+                if ($(window).width() > 1000) {
+                  // Apply the shrink animation using Anime.js
+                  anime(growAnimationProperties);
+                  anime(growKB);
+                }
               }
 
               // Iterate through each character in the keyboard
