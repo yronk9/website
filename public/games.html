@@ -925,7 +925,7 @@
     "zero",
     "zone"
 ]
-  var indexNew = dayOfYear%50;
+  var indexNew = dayOfYear%300;
 
   // this has the word of the day such as: 'word'
   var wordOfDay = wordDict[indexNew];
@@ -1034,6 +1034,13 @@
       // Iterate over each letter in the user's word and compare with the word of the day
       for (var i = 0; i < 4; i++) {
           var letter = userWord[i];
+          // Check if the letter is in the correct position
+          if (wordOfDay[i] == letter) {
+            // If the letter is in the correct position, change the corresponding square's class to 'green'
+            $("#square" + (startIndex + i)).removeClass("square yellow").addClass("green");
+            greenLetters.push(letter); // Mark this letter as green
+            count++;
+        }
           // Check if the letter exists in the word of the day
           if (!(wordOfDay.includes(letter))) {
               // If the letter exists, change the corresponding square's class to 'yellow'
@@ -1045,13 +1052,6 @@
               }
               var char = $("#square" + (startIndex + i)).text().trim();
               maybe.push(char);
-          }
-          // Check if the letter is in the correct position
-          if (wordOfDay[i] == letter) {
-              // If the letter is in the correct position, change the corresponding square's class to 'green'
-              $("#square" + (startIndex + i)).removeClass("square yellow").addClass("green");
-              greenLetters.push(letter); // Mark this letter as green
-              count++;
           }
       }
 
