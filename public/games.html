@@ -40,7 +40,7 @@
 
   .fixed-object {
     position: fixed;
-    padding: 30px; /* Add padding as needed */
+    padding: 5px; /* Add padding as needed */
    /* width: calc(100vw); /* Make the object 1/4 of the viewport width */
     font-size: medium;
     background-color: #2b2d2f00;
@@ -351,9 +351,10 @@
   }
 
    #invisinput {
+      opacity: 0;
       caret-color: transparent;
       justify-content: center;
-      height: 30px;
+      height: 10px;
       font-size: large;
       background-color: #2B2D2F;
       color: #363737;
@@ -414,7 +415,7 @@
 
 <body>
 
-<div class="fixed-object" style="top: 60px; font-size: large; background-color: #146e38;">Yron's Website</div>
+<div class="fixed-object" style="top: 0px; font-size: medium; background-color: #146e38;">Yron's Website</div>
 <!-- <a href="index.html" class="fixed-object" style="top: 70px; text-align: center;">Home</a>
 <a href="navigation.html" class="fixed-object" style="top: 130px; text-align: center;">Photos</a>
 <a href="update.html" class="fixed-object" style="top: 190px; text-align: center;">History</a> 
@@ -1120,6 +1121,12 @@
         closeInstructions();
     });
 
+    $(".square4").on('click', function() {
+        if (isMobileDevice()) {
+            $('#invisinput').focus();
+        }
+    });
+
 
     // // Fill squares 9 to 12 with letters from the word of the day
     // for (var i = 0; i < wordOfDay.length; i++) {
@@ -1334,10 +1341,10 @@
 
    var animateFixedObjectLeft = {
         targets: ['.fixed-object'],
-        translateX: '-2500px', // Adjust the value to move left
+        translateY: '-500px', // Adjust the value to move left
         easing: 'easeInOutSine', // Use easing for smoother animation
-        delay: 1500,
-        duration: 750 // Animation duration in milliseconds
+        delay: 3000,
+        duration: 2000 // Animation duration in milliseconds
       };
 
     var animateFixedObjectReturn = {
