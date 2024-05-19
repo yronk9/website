@@ -538,6 +538,7 @@
 
   var charList = [];
   var maybe = [];
+  var win = 0;
 
   // Create a new Date object for the current date
   const currentDate = new Date();
@@ -1057,11 +1058,12 @@
       // Check if the game is won
       if (count === 4) {
           if (isMobileDevice()) {
-              alert("Congratulations!\nYou found the word in " + numberOfGuesses + " guesses.");
               $(document).off("keydown");
               // Example usage:
               changeGoodLuckMessage("Play again tomorrow! :)");
               document.getElementById("contact-info").style.display = "block";
+              win = 1;
+              $("#invisinput").blur();
           } else {
               $(document).off("keydown");
               // Clear top row
@@ -1124,7 +1126,7 @@
     });
 
     $(".square4").on('click', function() {
-        if (isMobileDevice()) {
+        if (isMobileDevice() && win == 0) {
             $('#invisinput').focus();
             anime(animateFixedObjectLeft);
         }
@@ -1224,6 +1226,11 @@
               compareWordWithWordOfDay(currentRow);
               if (isMobileDevice()) {
                   anime(mobileSize);
+                  if (win ==1 ) {
+                    setTimeout(function() {
+                        alert("Congratulations!\nYou found the word in " + numberOfGuesses + " guesses.");
+                    }, 1500);
+                  }
               }
 
               // Iterate through each character in the keyboard
