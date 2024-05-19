@@ -261,7 +261,7 @@
     flex-shrink: 0; /* prevent squares from stretching */
     width: 15vw; /* adjust the size of the squares */
     height: 15vw; /* adjust the size of the squares */
-    background-color: #0080ff; /* default color */
+    background-color: #8f8f8f; /* default color */
     margin: 10px; /* adjust the spacing between squares */
     font-size: 480%; /* adjust the font size of the character */
     font-weight: bold;
@@ -347,8 +347,13 @@
       font-size: large;
       background-color: #2B2D2F;
       color: #363737;
+      margin-bottom: 10px;
    }
 
+   .scrollable-container {
+    max-height: 240px;
+    overflow-y: auto;
+   }
 
 </style>
 
@@ -367,33 +372,15 @@
         <div class="center-object">
             <input type="text" id="invisinput" placeholder="tap to open keyboard" style="text-align: center;">
         
+        <div class="scrollable-container">
 
-            <ul class="row">
-                <li class="square" id="square1"></li>
-                <li class="square" id="square2"></li>
-                <li class="square" id="square3"></li>
-                <li class="square" id="square4"></li>
-            </ul>
-            <ul class="row">
-                <li class="square" id="square5"></li>
-                <li class="square" id="square6"></li>
-                <li class="square" id="square7"></li>
-                <li class="square" id="square8"></li>
-            </ul>
-            <ul class="row">
-                <li class="square" id="square9"></li>
-                <li class="square" id="square10"></li>
-                <li class="square" id="square11"></li>
-                <li class="square" id="square12"></li>
-            </ul>
-            
-            <ul class="row">
-                <li class="square4" id="square13"></li>
-                <li class="square4" id="square14"></li>
-                <li class="square4" id="square15"></li>
-                <li class="square4" id="square16"></li>
-            </ul>
         </div>   
+        <ul class="row">
+          <li class="square4" id="input1"></li>
+          <li class="square4" id="input2"></li>
+          <li class="square4" id="input3"></li>
+          <li class="square4" id="input4"></li>
+      </ul>
         <div class="text" id="guess" style="text-align: center; font-size: large; margin-top: 20px;">No. of guesses: 0</div>     
         <div class="text" id="nooo" style="text-align: center; font-size: large; margin-top: 60px;">
           I recreated 'Wordle' to feature a four-letter format. <br><br> If you like it, let me know! <br><br>
@@ -456,6 +443,9 @@
 <script>
   // Define a global variable to store the number of guesses
   let numberOfGuesses = 0;
+
+  let currentRow = 1;
+
   // Create a new Date object for the current date
   const currentDate = new Date();
 
@@ -465,7 +455,7 @@
   const oneDay = 1000 * 60 * 60 * 24;
   const dayOfYear = Math.floor(diff / oneDay) + 1;
 
-  const wordDict = ['kite', 'puff', 'zoom', 'wisp', 'balm', 'quad', 'bane', 'vent', 'taco', 'germ', 'deck', 'mule', 'gold', 'jury', 'hoop', 'vole', 'gulf', 'jolt', 'gush', 'axle', 'pike', 'foil', 'lisp', 'hoax', 'wren', 'hazy', 'clog', 'knit', 'snug', 'glee', 'swag', 'ramp', 'bulb', 'vial', 'dyad', 'loft', 'lank', 'veer', 'jade', 'ibex', 'dusk', 'quiz', 'bode', 'lute', 'kelp', 'gawk', 'cove', 'quip', 'hush', 'zeal']
+  const wordDict = ['rice', 'kite', 'puff', 'zoom', 'wisp', 'balm', 'quad', 'bane', 'vent', 'taco', 'germ', 'deck', 'mule', 'gold', 'jury', 'hoop', 'vole', 'gulf', 'jolt', 'gush', 'axle', 'pike', 'foil', 'lisp', 'hoax', 'wren', 'hazy', 'clog', 'knit', 'snug', 'glee', 'swag', 'ramp', 'bulb', 'vial', 'dyad', 'loft', 'lank', 'veer', 'jade', 'ibex', 'dusk', 'quiz', 'bode', 'lute', 'kelp', 'gawk', 'cove', 'quip', 'hush', 'zeal']
 
   var indexNew = dayOfYear%50;
 
@@ -543,21 +533,25 @@
 
   */ 
 
-  function compareWordWithWordOfDay(currentRow) {
+  function createNewRow(rowNumber) {
+      let row = $('<ul class="row"></ul>'); // Create a new row
+      for (let i = 1; i <= 4; i++) {
+          let squareId = 'square' + ((rowNumber - 1) * 4 + i);
+          row.append('<li class="square" id="' + squareId + '"></li>'); // Append squares to the row
+      }
+      return row;
+  }
+
+
+  function compareWordWithWordOfDay() {
     // Increment the number of guesses each time the function is called
     numberOfGuesses++;
 
     // Update the display of the number of guesses
     $("#guess").text("No. of guesses: " + numberOfGuesses);
 
-    // Reset the colors of all squares
-    if (currentRow == 1) {
-      $(".yellow").removeClass("yellow").addClass("square");
-      $(".green").removeClass("green").addClass("square");
-    }
-
     // Calculate the starting index based on the current row
-    let startIndex = (currentRow - 1) * 4 + 1;
+    let startIndex = (currentRow - 1) * 4 + 1;        
 
     // Get the word formed by the user from the specified row's squares
     let userWord = "";
@@ -582,7 +576,7 @@
         // Check if the letter is in the correct position
         if (wordOfDay[i] == letter) {
             // If the letter is in the correct position, change the corresponding square's class to 'green'
-            $("#square" + (startIndex + i)).removeClass("square yellow").addClass("green");
+            $("#square" + (startIndex+ i )).removeClass("square yellow").addClass("green");
             count++;
         }
     }
@@ -603,6 +597,7 @@
         $("#key2").html("<div style='font-size: 24px;'>You got it! Play agin tomorrow</div>");
       }
     } else {
+      currentRow++;
       $(document).on("keydown");
         }
   }
@@ -637,10 +632,6 @@
           document.getElementById("keyboard").style.display = "block";
         }
 
-
-    // Define a counter to keep track of the current row
-    var currentRow = 1;
-
     $(document).on("keydown", function(e) {
 
       // Get the keycode of the pressed key
@@ -652,14 +643,14 @@
           var letter = String.fromCharCode(keycode).toUpperCase();
 
           // Find the first empty square4 and fill it with the pressed letter
-          if ($("#square13").text().trim() === '') {
-              $("#square13").text(letter);
-          } else if ($("#square14").text().trim() === '') {
-              $("#square14").text(letter);
-          } else if ($("#square15").text().trim() === '') {
-              $("#square15").text(letter);
-          } else if ($("#square16").text().trim() === '') {
-              $("#square16").text(letter);
+          if ($("#input1").text().trim() === '') {
+              $("#input1").text(letter);
+          } else if ($("#input2").text().trim() === '') {
+              $("#input2").text(letter);
+          } else if ($("#input3").text().trim() === '') {
+              $("#input3").text(letter);
+          } else if ($("#input4").text().trim() === '') {
+              $("#input4").text(letter);
           }
 
           // Prevent default behavior of the key
@@ -668,14 +659,14 @@
       // Check if the pressed key is backspace
       else if (keycode == 8) {
           // Find the last filled square4 and remove its content
-          if ($("#square16").text().trim() !== '') {
-              $("#square16").text('');
-          } else if ($("#square15").text().trim() !== '') {
-              $("#square15").text('');
-          } else if ($("#square14").text().trim() !== '') {
-              $("#square14").text('');
-          } else if ($("#square13").text().trim() !== '') {
-              $("#square13").text('');
+          if ($("#input4").text().trim() !== '') {
+              $("#input4").text('');
+          } else if ($("#input3").text().trim() !== '') {
+              $("#input3").text('');
+          } else if ($("#input2").text().trim() !== '') {
+              $("#input2").text('');
+          } else if ($("#input1").text().trim() !== '') {
+              $("#input1").text('');
           }
 
           // Prevent default behavior of the key
@@ -683,44 +674,28 @@
       }
       // Check if the pressed key is Enter
       else if (keycode == 13) {
-          if (currentRow == 1) {
-                  // Clear squares 13 to 16
-                  $("#square5").text('');
-                  $("#square6").text('');
-                  $("#square7").text('');
-                  $("#square8").text('');
-                  // Clear squares 13 to 16
-                  $("#square9").text('');
-                  $("#square10").text('');
-                  $("#square11").text('');
-                  $("#square12").text('');
-          }
           // Check if there is a letter in square16
-          var square16Content = $("#square16").text().trim();
-          if (square16Content !== '') {
+          var square16Content = $("#input4").text().trim();
+          if (input4 !== '') {
+              let newRow = createNewRow(currentRow); // Create a new row
+              $(".scrollable-container").append(newRow); // Append the new row to the container
+              $(".scrollable-container").scrollTop($(".scrollable-container")[0].scrollHeight);
               // Copy the content of square13 to square16 to the current row
-              $("#square" + (currentRow * 4 - 3)).text($("#square13").text().trim());
-              $("#square" + (currentRow * 4 - 2)).text($("#square14").text().trim());
-              $("#square" + (currentRow * 4 - 1)).text($("#square15").text().trim());
+              $("#square" + (currentRow * 4 - 3)).text($("#input1").text().trim());
+              $("#square" + (currentRow * 4 - 2)).text($("#input2").text().trim());
+              $("#square" + (currentRow * 4 - 1)).text($("#input3").text().trim());
               $("#square" + (currentRow * 4)).text(square16Content);
 
               // Clear squares 13 to 16
-              $("#square13").text('');
-              $("#square14").text('');
-              $("#square15").text('');
-              $("#square16").text('');
+              $("#input1").text('');
+              $("#input2").text('');
+              $("#input3").text('');
+              $("#input4").text('');
 
               compareWordWithWordOfDay(currentRow);
-
-              // Increment the counter for the next row
-              currentRow++;
-
-              // If all rows are filled, reset the counter
-              if (currentRow > 3) {
-                  currentRow = 1;
+              if (isMobileDevice()) {
+                anime(mobileSize);
               }
-
-              
           }
       }
     });
@@ -841,7 +816,7 @@
 
     var animateFixedObjectReturn = {
         targets: ['.fixed-object'],
-        translateX: '0px', // Adjust the value to move left
+        translateX: '-2500px', // Adjust the value to move left
         easing: 'easeInOutSine', // Use easing for smoother animation
         delay: 1000,
         duration: 500 // Animation duration in milliseconds
