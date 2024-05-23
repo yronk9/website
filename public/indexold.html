@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>yo</title>
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.2/lib/anime.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  <link href="https://fonts.googleapis.com/css?family=Poppins:600" rel="stylesheet">
+</head>
+
+<style>
+  body {
+    background: #1D1F20;
+    font-family: 'Courier New', sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  header {
+    background-color: #2B2D2F;
+    color: #fff;
+    padding: 25%;
+    text-align: center;
+    font-size: 1.25rem;
+    margin-bottom: 2%;
+    display: none;
+    font-size: large;
+  }
+
+  main {
+    width: 100%;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0;
+  }
+
+  .object {
+    background-color: #2B2D2F;
+    color: #fff;
+    border-radius: 8px;
+    padding: 4%;
+    margin-bottom: 2%;
+    max-width: 80%;
+    margin: 0 auto;
+  }
+
+  .object2 {
+    background-color: #1D1F20;
+    color: #fff;
+    border-radius: 8px;
+    padding: 20%;
+    margin-bottom: 2%;
+    max-width: 80%;
+    margin: 0 auto;
+  }
+
+  .object-header {
+    font-size: 1rem;
+    font-weight: bold;
+    margin-bottom: 3%;
+  }
+
+  .object-body {
+    font-size: 0.9rem;
+    font-weight: normal;
+    margin-bottom: 2%;
+  }
+
+  .image-container {
+    margin-bottom: 2%;
+    text-align: center;
+  }
+
+  .image-container img {
+    max-width: 100%;
+    border-radius: 8px;
+  }
+
+  .video-container {
+    position: relative;
+    padding-bottom: 56.25%;
+    height: 0;
+    overflow: hidden;
+    margin-bottom: 2%;
+  }
+
+  .video-container iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  .textbox-container {
+    position: relative;
+    margin: 2% auto;
+    margin-bottom: 5%;
+    width: 65%;
+    text-align: center;
+  }
+
+  .textbox {
+    width: 100%;
+    padding: 2%;
+    box-sizing: border-box;
+    border: 2px solid hsl(56, 76%, 65%);
+    border-radius: 4px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.9rem;
+    color: #FFFFFF;
+    background-color: transparent;
+    text-align: center;
+    transition: border-color 0.3s ease;
+  }
+
+  .textbox:focus {
+    border-color: #71DFBE;
+    outline: none;
+  }
+
+  .button {
+    background: #2B2D2F;
+    height: 8vw;
+    width: 20vw;
+    text-align: center;
+    position: relative;
+    margin: 0 auto;
+    margin-bottom: 10%;
+    cursor: pointer;
+    border-radius: 30px;
+    overflow: hidden;
+  }
+
+  .button .text {
+    font: bold 1rem/1 poppins;
+    color: hsl(56, 76%, 65%);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    transition: transform 0.3s ease;
+  }
+
+  .button.invalid .text {
+    transform: translate(-50%, -50%) scale(0.8);
+  }
+
+  .progress-bar {
+    position: absolute;
+    height: 10px;
+    width: 0;
+    right: 0;
+    top: 50%;
+    left: 50%;
+    border-radius: 200px;
+    transform: translateY(-50%) translateX(-50%);
+    background: lighten(#2B2D2F, 15%);
+  }
+
+  svg {
+    width: 30px;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%) translateX(-50%);
+    left: 50%;
+    right: 0;
+  }
+
+  .check {
+    fill: none;
+    stroke: #FFFFFF;
+    stroke-width: 3;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+  /* spaces objects some distance apart */
+  .object + .object {
+    margin-top: 30%; /* add margin to top of objects except the first one */
+  }
+
+  .object:last-child {
+    margin-bottom: 0; /* remove margin from bottom of the last object */
+  }
+
+</style>
+
+<body>
+
+<header id="header">
+  Yron's Website
+</header>
+
+<main>
+  <div class="object">
+    <div class="object-header" style="text-align: center;">
+       
+    </div>
+    <div class="object-body" style="text-align:center; font-style:bold;">
+      Click here to continue
+    </div>
+    <div class="object-body" style="text-align: center;">
+       
+    </div>
+  </div>
+
+  <div class="object2">
+    <div class="object-header" style="text-align: center;">
+    </div>
+    <div class="object-body" style="text-align:center; font-style:bold;">
+      The rest of the website is under construction...
+    </div>
+
+  </div>
+
+  <!-- <div class="object">
+    <div class="object-header">Something to remember:</div>
+    <div class="object-body" style="font-style:italic;">
+      “Kill your darlings, kill your darlings, even when it breaks your egocentric little scribbler’s heart, kill your darlings.”
+    </div>
+    <div class="object-body">
+      ― Stephen King, On Writing: A Memoir of the Craft
+    </div>
+  </div>
+
+  <div class="object">
+    <div class="object-header">Somewhere to be:</div>
+    <div class="object-body image-container">
+      <img src="https://imgs.mongabay.com/wp-content/uploads/sites/20/2021/04/27102317/12-1.jpg" alt="Busa, PH">
+    </div>
+  </div>
+
+  <div class="object">
+    <div class="object-header">Something to listen to:</div>
+    <div class="object-body">
+      I usually listen to music while I get work done... and this is what I have been listening to lately:
+    </div>
+    <div class="object-body video-container">
+      <iframe width="80%" height="45vw" src="https://www.youtube.com/embed/_P2ilGmSXDk" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    </div>
+  </div>
+
+  <div class="object-body" style="text-align: center; font-size: 0.7rem; margin-top:10%; color:beige">
+    Type and submit your email address below</div>
+    <div class="object-body" style="text-align: center; font-size: 0.7rem; margin-top:2%; margin-bottom:10%; color:beige">
+    for a weekly letter to your email...</div>
+
+  <div class="textbox-container">
+    <input type="text" class="textbox" id="emailInput" placeholder="Your email address">
+  </div>
+
+  <div class="button">
+    <div class="text">Submit</div>
+    <div class="progress-bar"></div>
+    <svg x="0px" y="0px" viewBox="0 0 25 30" style="enable-background:new 0 0 25 30;">
+      <path class="check" class="st0" d="M2,19.2C5.9,23.6,9.4,28,9.4,28L23,2"/>
+    </svg>
+  </div> -->
+
+</main>
+
+<script>
+  var basicTimeline = anime.timeline({
+    autoplay: false
+  });
+
+  // trigger the shaking animation
+  function shakeObject(object) {
+    object.addClass("shaking"); // classifies to the clicked object as "shaking"
+    anime({
+      targets: ".shaking", // target elements with the shaking class
+      // translateY: [
+      //   { value: '-20px', duration: 100, easing: 'easeInOutSine' }, // translate up
+      //   { value: '20px', duration: 100, easing: 'easeInOutSine' },  // translate down
+      //   { value: '0', duration: 100, easing: 'easeInOutSine' }     // back to initial position
+      // ],
+      // translateX: [
+      //   { value: '-20px', duration: 100, easing: 'easeInOutSine' }, // translate left
+      //   { value: '20px', duration: 100, easing: 'easeInOutSine' },  // translate right
+      //   { value: '0', duration: 100, easing: 'easeInOutSine' }     // back to initial position
+      // ],
+      // rotate: {
+      //   value: '360deg', // Spin around in a circle
+      //   duration: 500,
+      //   easing: 'easeInOutSine'
+      // },
+      // scale: [
+      //   { value: 2, duration: 200, easing: 'easeInOutSine' }, // grow bigger
+      //   { value: 0, duration: 200, easing: 'easeInOutSine' }    // shrink to nothing
+      // ],
+      translateX: [
+      { value: '40px', duration: 250, easing: 'easeInOutSine' },
+      { value: '-40px', duration: 250, easing: 'easeInOutSine' },
+      { value: '0px', duration: 200, easing: 'easeInOutSine' },
+      ],
+      scale: [
+        { value: 1, duration: 500, easing: 'easeInOutSine' }, // grow bigger
+        { value: 0, duration: 200, easing: 'easeInOutSine' }    // shrink to nothing
+      ],
+      complete: function(anim) {
+        object.removeClass("shaking"); // remove the shaking class after animation completes
+      }
+    });
+  }
+
+  // listen for clicking on the object
+  $(".object").click(function() {
+    shakeObject($(this));
+    
+    // delay the redirection by 1500 milliseconds (1.5 seconds)
+    setTimeout(function() {
+      window.location.href = 'games.html';  //<-- YOU NEED THIS FOR NAVIGATION
+    }, 2000);
+  });
+
+  $(document).ready(function() {
+
+    // fade in header text when page opens
+    $("header").fadeIn(1000);
+
+    // fade out header text when scrolling down
+    $(window).scroll(function() {
+        var scrollPosition = $(this).scrollTop();
+        var opacity = 1 - (scrollPosition / 240);
+        $("header").css("opacity", opacity);
+
+        // check if header is still animating
+        if (header.is(':animated')) {
+          // Stop the animation
+          header.stop();
+        }
+
+        var paddingPercentage = 25 - (scrollPosition); // Change the division factor to adjust the speed of fading
+        if (paddingPercentage < 2) paddingPercentage = 0.5; // Ensure padding doesn't go below 2%
+        var padding = paddingPercentage + "%";
+        $("header").css("padding", padding);
+        $("header").css("bottom-padding", padding);
+
+        // if (scrollPosition > 17) {
+        //     // Limit scrolling to scroll position 17
+        //     $(window).scrollTop(17);
+        // }
+    });
+
+    var pathEls = $(".check");
+    for (var i = 0; i < pathEls.length; i++) {
+      var pathEl = pathEls[i];
+      var offset = anime.setDashoffset(pathEl);
+      pathEl.setAttribute("stroke-dashoffset", offset);
+    }
+
+    basicTimeline
+    .add({
+      targets: ".text",
+      duration: 1,
+      opacity: "0"
+    })
+    .add({
+      targets: ".button",
+      duration: 1300,
+      height: "2vw",
+      width: "20vw",
+      backgroundColor: "#2B2D2F",
+      border: "0",
+      borderRadius: "30px"
+    })
+    .add({
+      targets: ".button",
+      width: 0,
+      duration: 1,
+      delay: 500
+    })
+    .add({
+      targets: ".progress-bar",
+      width: "6vw",
+      height: "6vw",
+      delay: 500,
+      duration: 750,
+      borderRadius: "6vw",
+      backgroundColor: "#71DFBE"
+    })
+    .add({
+      targets: pathEl,
+      strokeDashoffset: [offset, 0],
+      duration: 200,
+      easing: "easeInOutSine"
+    });
+
+    $(".button").click(function() {
+      // get the entered email
+      var enteredEmail = $("#emailInput").val();
+      // email validation regex
+      var emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      // check if entered email is valid
+      if (!emailPattern.test(enteredEmail)) {
+        // if invalid, change button text and stop animation
+        $(".button").addClass("invalid");
+        $(".text").text("Invalid entry");
+        basicTimeline.pause();
+        return;
+      }
+
+      basicTimeline.play();
+      // disable the input field after button click
+      $("#emailInput").prop("disabled", true);
+      $(".button").removeClass("invalid");
+    });
+
+    $(".text").click(function() {
+      if ($(".text").text() === "Invalid entry") {
+        $(".button").removeClass("invalid");
+        $(".text").text("Submit");
+        $("#emailInput").prop("disabled", false);
+        basicTimeline.seek(0); // go back to the start of animation
+      }
+    });
+
+    $(".textbox").click(function() {
+      if ($(".text").text() === "Invalid entry") {
+        $(".button").removeClass("invalid");
+        $(".text").text("Submit");
+        basicTimeline.seek(0); // go back to the start of animation
+      }
+    });
+  });
+
+  // Function to scroll to the bottom of the page
+  function scrollToBottom() {
+    window.scrollTo({
+      top: document.body.scrollHeight,
+      behavior: 'smooth'
+    });
+  }
+
+  // Add click event listener to the header to scroll to the bottom
+  document.getElementById('header').addEventListener('click', scrollToBottom);
+  
+</script>
+
+</body>
+</html>
