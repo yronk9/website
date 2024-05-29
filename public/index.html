@@ -925,10 +925,10 @@
     "zero",
     "zone"
 ]
-  var indexNew = dayOfYear%300;
+  var indexNew = Math.floor(Math.random() * 300) //dayOfYear%300;
 
   // this has the word of the day such as: 'word'
-  var wordOfDay = wordDict[indexNew+10];
+  var wordOfDay = wordDict[(indexNew)];
 
   var basicTimeline = anime.timeline({
     autoplay: false
@@ -1060,7 +1060,7 @@
           if (isMobileDevice()) {
               $(document).off("keydown");
               // Example usage:
-              changeGoodLuckMessage("Play again tomorrow! :)");
+              changeGoodLuckMessage("Refresh the page for a new word!");
               document.getElementById("contact-info").style.display = "block";
               win = 1;
               $("#invisinput").blur();
@@ -1071,7 +1071,7 @@
               // Clear bottom row
               $("#key3").empty();
               // Display "You win" message in the middle row
-              $("#key2").html("<div style='font-size: 24px;'>You got it! Play again tomorrow</div>");
+              $("#key2").html("<div style='font-size: 24px;'>You got it! Refresh the page to play again!</div>");
           }
       } else {
           currentRow++;
@@ -1326,7 +1326,7 @@
           width: '5vw', // Original width
           height: '5vw', // Original height
           margin: '7px',
-          fontSize: '350%', // Original font size
+          fontSize: '380%', // Original font size
           easing: 'easeInOutSine', // Use easing for smoother animation
           duration: 500 // Animation duration in milliseconds
         };
